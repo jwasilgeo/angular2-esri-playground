@@ -5,11 +5,12 @@ import { Component } from 'angular2/core';
     template: 
         `
         <div>
+            Features
             <ul>
                 <li>Angular 2 with routing</li>
                 <li>Esri 4.x JSAPI</li>
                 <li>View coordination service to start views with previous settings</li>
-                <li>Material Design Lite</li>
+                <li>Picnic CSS</li>
             </ul>
         </div>
         `,
