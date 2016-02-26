@@ -8,9 +8,9 @@ import { Component } from 'angular2/core';
             Features
             <ul>
                 <li>Angular 2 with routing</li>
-                <li>Esri 4.x JSAPI</li>
-                <li>View coordination service to keep views in sync</li>
-                <li>Picnic CSS</li>
+                <li><a href="https://developers.arcgis.com/javascript/beta/">Esri 4.x JSAPI</a></li>
+                <li>Custom view coordination service to help keep views in sync</li>
+                <li><a href="http://picnicss.com/">Picnic CSS</a></li>
             </ul>
         </div>
         `,

@@ -23,6 +23,10 @@ import { BrowserDetectionService } from './browser-detection.service'
                 </div>
             </div>
         </div>
+        <label>
+            <input #delayedCB type="checkbox" [checked]="delayedSync" (change)="delayedSync = delayedCB.checked">
+            <span class="checkable">Delayed syncing</span>
+        </label>
         `,
      directives: [/*EsriMapViewComponent, */EsriSceneViewComponent],
      providers: [BrowserDetectionService]
@@ -30,6 +34,7 @@ import { BrowserDetectionService } from './browser-detection.service'
 export class SyncedViewsComponent {
     isMobile: false;
     isMobileMessage: null;
+    delayedSync: false;
 
     constructor(private _browserSniffer: BrowserDetectionService) {
         this.isMobile = _browserSniffer.isMobile();
@@ -40,6 +45,6 @@ export class SyncedViewsComponent {
     sceneViewComponents: EsriSceneViewComponent
 
     syncViews() {
-        this.sceneViewComponents.toArray().forEach(svc => svc.syncCamera());
+        this.sceneViewComponents.toArray().forEach(svc => svc.syncCamera(this.delayedSync));
     }
 }
