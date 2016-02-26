@@ -1,5 +1,4 @@
 import { Component, ViewChildren } from 'angular2/core';
-// import { EsriMapViewComponent } from './esri-map-view.component';
 import { EsriSceneViewComponent } from './esri-scene-view.component';
 import { BrowserDetectionService } from './browser-detection.service'
 
@@ -23,18 +22,26 @@ import { BrowserDetectionService } from './browser-detection.service'
                 </div>
             </div>
         </div>
+        <p>This example demonstrates two different Esri scene views that share the same Esri map. Explore them by switching between the tabs above.</p>
+        <p>A custom Angular2 service keeps track of changes in the current view's camera position properties, so that when switching between tabs, the next view you interact with will be in the same position.</p>
+        <p>Go ahead—we all know you want to click on stuff—set some options to help illustrate this concept:</p>
         <label>
-            <input #delayedCB type="checkbox" [checked]="delayedSync" (change)="delayedSync = delayedCB.checked">
-            <span class="checkable">Delayed syncing</span>
+            <input #delaySyncCB type="checkbox" [checked]="delaySync" (change)="delaySync = delaySyncCB.checked" [disabled]="disableSync">
+            <span class="checkable" [style.text-decoration]="disableSync ? 'line-through' : 'none'">Delay syncing</span>
+        </label>
+        <label>
+            <input #disableSyncCB type="checkbox" [checked]="disableSync" (change)="disableSync = disableSyncCB.checked">
+            <span class="checkable">Disable syncing</span>
         </label>
         `,
-     directives: [/*EsriMapViewComponent, */EsriSceneViewComponent],
+     directives: [EsriSceneViewComponent],
      providers: [BrowserDetectionService]
 })
 export class SyncedViewsComponent {
     isMobile: false;
     isMobileMessage: null;
-    delayedSync: false;
+    delaySync: false;
+    disableSync: false;
 
     constructor(private _browserSniffer: BrowserDetectionService) {
         this.isMobile = _browserSniffer.isMobile();
@@ -45,6 +52,8 @@ export class SyncedViewsComponent {
     sceneViewComponents: EsriSceneViewComponent
 
     syncViews() {
-        this.sceneViewComponents.toArray().forEach(svc => svc.syncCamera(this.delayedSync));
+        if (!this.disableSync) {
+            this.sceneViewComponents.toArray().forEach(svc => svc.syncCamera(this.delaySync));
+        }
     }
 }
