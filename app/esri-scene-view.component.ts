@@ -38,10 +38,10 @@ export class EsriSceneViewComponent {
 
     }
 
-    syncCamera(delayedSync:boolean) {
-        if (delayedSync) {
+    syncCamera(delaySync:boolean) {
+        if (delaySync) {
             this.view.animateTo(this._viewCoordinationService.camera, {
-                delay: 500
+                delay: 700
             });
         } else {
             this.view.camera = this._viewCoordinationService.camera;

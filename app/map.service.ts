@@ -6,7 +6,7 @@ export class MapService {
     map: null;
     constructor() {
         this.map = new Map({
-            basemap: 'gray'
+            basemap: 'satellite'
             // layers: [
             //     new VectorTileLayer({
             //         url: 'http://basemaps.arcgis.com/arcgis/rest/services/World_Basemap/VectorTileServer'
