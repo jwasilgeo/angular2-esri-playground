@@ -2,11 +2,11 @@
 <html>
     <head>
         <base href="/">
-        <title>Angular 2 + Esri 4</title>
-        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>Angular 2 + Esri 4 Playground</title>
+        <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no">
+
         
         <!-- load Angular2 libraries -->
-        <!-- IE required polyfills, in this exact order -->
         <script src="node_modules/es6-shim/es6-shim.min.js"></script>
         <script src="node_modules/systemjs/dist/system-polyfills.js"></script>
         <script src="node_modules/angular2/bundles/angular2-polyfills.js"></script>
@@ -15,6 +15,7 @@
         <script src="node_modules/angular2/bundles/angular2.dev.js"></script>
         <script src="node_modules/angular2/bundles/router.dev.js"></script>
 
+        <!-- load Picnic CSS library -->
         <link rel="stylesheet" href="//cdn.jsdelivr.net/picnicss/5.1.0/picnic.min.css">
         <link rel="stylesheet" href="//cdn.jsdelivr.net/picnicss/5.1.0/plugins.min.css">
         
@@ -23,9 +24,6 @@
         <script src="//js.arcgis.com/4.0beta3/"></script>
 
         <style type="text/css">
-            body {
-                margin-top: 3.5em;
-            }
             .esri-icon-plus, .esri-icon-minus {
                 line-height: inherit;
             }
