@@ -24,7 +24,7 @@ System.register(['angular2/core'], function(exports_1, context_1) {
                 IntroComponent = __decorate([
                     core_1.Component({
                         selector: 'intro',
-                        template: "\n        <div>\n            Features\n            <ul>\n                <li>Angular 2 with routing</li>\n                <li>Esri 4.x JSAPI</li>\n                <li>View coordination service to keep views in sync</li>\n                <li>Picnic CSS</li>\n            </ul>\n        </div>\n        ",
+                        template: "\n        <div>\n            Features\n            <ul>\n                <li>Angular 2 with routing</li>\n                <li><a href=\"https://developers.arcgis.com/javascript/beta/\">Esri 4.x JSAPI</a></li>\n                <li>Custom view coordination service to help keep views in sync</li>\n                <li><a href=\"http://picnicss.com/\">Picnic CSS</a></li>\n            </ul>\n        </div>\n        ",
                     }), 
                     __metadata('design:paramtypes', [])
                 ], IntroComponent);

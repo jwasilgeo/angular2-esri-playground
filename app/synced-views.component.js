@@ -29,11 +29,13 @@ System.register(['angular2/core', './esri-scene-view.component', './browser-dete
                     this._browserSniffer = _browserSniffer;
                     this.isMobile = false;
                     this.isMobileMessage = null;
+                    this.delayedSync = false;
                     this.isMobile = _browserSniffer.isMobile();
                     this.isMobileMessage = _browserSniffer.isMobileMessage;
                 }
                 SyncedViewsComponent.prototype.syncViews = function () {
-                    this.sceneViewComponents.toArray().forEach(function (svc) { return svc.syncCamera(); });
+                    var _this = this;
+                    this.sceneViewComponents.toArray().forEach(function (svc) { return svc.syncCamera(_this.delayedSync); });
                 };
                 __decorate([
                     core_1.ViewChildren(esri_scene_view_component_1.EsriSceneViewComponent), 
@@ -42,7 +44,7 @@ System.register(['angular2/core', './esri-scene-view.component', './browser-dete
                 SyncedViewsComponent = __decorate([
                     core_1.Component({
                         selector: 'synced-views',
-                        template: "\n        <h4 *ngIf=\"isMobile\">{{ isMobileMessage }} <span class=\"label warning\">Warning</span></h4>\n        \n        <div class=\"tabs two\" *ngIf=\"!isMobile\">\n            <input id='tab-1' type='radio' name='tabgroupB' checked />\n            <label class=\"pseudo button toggle\" for=\"tab-1\" (click)=\"syncViews()\">Scene View 1</label>\n            <input id='tab-2' type='radio' name='tabgroupB'>\n            <label class=\"pseudo button toggle\" for=\"tab-2\" (click)=\"syncViews()\">Scene View 2</label>\n            <div class=\"row\">\n                <div>\n                    <esri-scene-view></esri-scene-view>\n                </div>\n                <div>\n                    <esri-scene-view></esri-scene-view>\n                </div>\n            </div>\n        </div>\n        ",
+                        template: "\n        <h4 *ngIf=\"isMobile\">{{ isMobileMessage }} <span class=\"label warning\">Warning</span></h4>\n        \n        <div class=\"tabs two\" *ngIf=\"!isMobile\">\n            <input id='tab-1' type='radio' name='tabgroupB' checked />\n            <label class=\"pseudo button toggle\" for=\"tab-1\" (click)=\"syncViews()\">Scene View 1</label>\n            <input id='tab-2' type='radio' name='tabgroupB'>\n            <label class=\"pseudo button toggle\" for=\"tab-2\" (click)=\"syncViews()\">Scene View 2</label>\n            <div class=\"row\">\n                <div>\n                    <esri-scene-view></esri-scene-view>\n                </div>\n                <div>\n                    <esri-scene-view></esri-scene-view>\n                </div>\n            </div>\n        </div>\n        <label>\n            <input #delayedCB type=\"checkbox\" [checked]=\"delayedSync\" (change)=\"delayedSync = delayedCB.checked\">\n            <span class=\"checkable\">Delayed syncing</span>\n        </label>\n        ",
                         directives: [esri_scene_view_component_1.EsriSceneViewComponent],
                         providers: [browser_detection_service_1.BrowserDetectionService]
                     }), 
