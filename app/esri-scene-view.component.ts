@@ -38,10 +38,13 @@ export class EsriSceneViewComponent {
 
     }
 
-    syncCamera() {
-        this.view.animateTo(this._viewCoordinationService.camera, {
-            delay: 300
-        });
-        // this.view.camera = this._viewCoordinationService.camera;
+    syncCamera(delayedSync:boolean) {
+        if (delayedSync) {
+            this.view.animateTo(this._viewCoordinationService.camera, {
+                delay: 500
+            });
+        } else {
+            this.view.camera = this._viewCoordinationService.camera;
+        }
     }
 }

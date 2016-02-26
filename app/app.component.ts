@@ -52,6 +52,8 @@ import { SyncedViewsComponent } from './synced-views.component';
             <div class="menu">
                 <a class="pseudo button" [routerLink]="['Intro']">Intro</a>
                 <a class="button" [routerLink]="['SyncedViews']">Synced Views</a>
+                <a class="pseudo button" href="https://github.com/jwasilgeo/angular2-esri-playground">Github</a>
+                <a class="pseudo button" href="https://twitter.com/JWasilGeo">@JWasilGeo</a>
             </div>
         </nav>
         <main>
