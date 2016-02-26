@@ -25,7 +25,7 @@ System.register(['esri-mods', 'angular2/core'], function(exports_1, context_1) {
                 function MapService() {
                     this.map = null;
                     this.map = new esri_mods_1.Map({
-                        basemap: 'gray'
+                        basemap: 'satellite'
                     });
                 }
                 MapService = __decorate([

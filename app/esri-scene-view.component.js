@@ -50,10 +50,10 @@ System.register(['angular2/core', './map.service', './view-coordination.service'
                         this._viewCoordinationService.setValue(newVal, propertyName);
                     }.bind(this));
                 };
-                EsriSceneViewComponent.prototype.syncCamera = function (delayedSync) {
-                    if (delayedSync) {
+                EsriSceneViewComponent.prototype.syncCamera = function (delaySync) {
+                    if (delaySync) {
                         this.view.animateTo(this._viewCoordinationService.camera, {
-                            delay: 500
+                            delay: 700
                         });
                     }
                     else {
