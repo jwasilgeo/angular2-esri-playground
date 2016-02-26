@@ -1,10 +1,9 @@
 import { Component } from 'angular2/core';
 import { RouteConfig, ROUTER_DIRECTIVES, ROUTER_PROVIDERS } from 'angular2/router';
-import { ViewCoordinationService } from './view-coordination.service';
+// import { ViewCoordinationService } from './view-coordination.service';
 import { IntroComponent } from './intro.component';
 import { SyncedViewsComponent } from './synced-views.component';
-// import { EsriMapViewComponent } from './esri-map-view.component';
-// import { EsriSceneViewComponent } from './esri-scene-view.component';
+import { GeometryEngineShowcaseComponent } from './geometry-engine-showcase.component';
 
 @RouteConfig([
     {
@@ -17,17 +16,12 @@ import { SyncedViewsComponent } from './synced-views.component';
         path: '/synced-views',
         name: 'SyncedViews',
         component: SyncedViewsComponent
-    }/*,
-    {
-        path: '/esri-map-view',
-        name: 'EsriMapView',
-        component: EsriMapViewComponent
     },
     {
-        path: '/esri-scene-view',
-        name: 'EsriSceneView',
-        component: EsriSceneViewComponent
-    }*/
+        path: '/geom-engine-showcase',
+        name: 'GeometryEngineShowcase',
+        component: GeometryEngineShowcaseComponent
+    }
 ])
 @Component({
     selector: 'my-app',
@@ -47,11 +41,13 @@ import { SyncedViewsComponent } from './synced-views.component';
 
             <!-- responsive-->
             <input id="bmenub" type="checkbox" class="show">
-            <label for="bmenub" class="burger pseudo button">menu</label>
+            <label for="bmenub" class="burger pseudo button">≡</label>
 
             <div class="menu">
                 <a class="pseudo button" [routerLink]="['Intro']">Intro</a>
-                <a class="button" [routerLink]="['SyncedViews']">Synced Views</a>
+                <a class="button" [routerLink]="['SyncedViews']">Synced 3D Views</a>
+                <a class="button" [routerLink]="['GeometryEngineShowcase']">Geometry Engine</a>
+
                 <a class="pseudo button" href="https://github.com/jwasilgeo/angular2-esri-playground">Github</a>
                 <a class="pseudo button" href="https://twitter.com/JWasilGeo">@JWasilGeo</a>
             </div>
@@ -62,9 +58,7 @@ import { SyncedViewsComponent } from './synced-views.component';
             </section>
         </main>
         `,
-                // <a class="button" [routerLink]="['EsriMapView']">Map View</a>
-                // <a class="button" [routerLink]="['EsriSceneView']">Scene View</a>
     directives: [ROUTER_DIRECTIVES],
-    providers: [ROUTER_PROVIDERS, ViewCoordinationService]
+    providers: [ROUTER_PROVIDERS/*, ViewCoordinationService*/]
 })
 export class AppComponent { }

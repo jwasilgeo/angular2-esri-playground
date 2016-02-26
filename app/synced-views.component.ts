@@ -1,6 +1,7 @@
 import { Component, ViewChildren } from 'angular2/core';
 import { EsriSceneViewComponent } from './esri-scene-view.component';
-import { BrowserDetectionService } from './browser-detection.service'
+import { ViewCoordinationService } from './view-coordination.service';
+import { BrowserDetectionService } from './browser-detection.service';
 
 @Component({
     selector: 'synced-views',
@@ -35,7 +36,7 @@ import { BrowserDetectionService } from './browser-detection.service'
         </label>
         `,
      directives: [EsriSceneViewComponent],
-     providers: [BrowserDetectionService]
+     providers: [ViewCoordinationService, BrowserDetectionService]
 })
 export class SyncedViewsComponent {
     isMobile: false;
