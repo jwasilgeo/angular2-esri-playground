@@ -22,6 +22,9 @@
         <link rel="stylesheet" href="//js.arcgis.com/4.0beta3/esri/css/main.css">
         <script src="//js.arcgis.com/4.0beta3/"></script>
 
+        <!-- load esri-system-js library -->
+        <script src="node_modules/esri-system-js/dist/esriSystem.js"></script>
+
         <style type="text/css">
             .esri-icon-plus, .esri-icon-minus {
                 line-height: inherit;
@@ -36,7 +39,7 @@
     <body>
         <playground-app>Loading...</playground-app>
 
-        <!-- configure SystemJS, load Esri modules, and bootstrap the app -->
+        <!-- using esri-system-js: configure SystemJS, load Esri modules, and bootstrap the app -->
         <script src="app/load.js"></script>
     </body>
 </html>
