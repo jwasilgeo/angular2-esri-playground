@@ -1,21 +1,24 @@
-import { Component, ElementRef, Output, EventEmitter } from 'angular2/core';
-import { MapService } from './map.service';
-import { ViewCoordinationService } from './view-coordination.service';
+import { Component, ElementRef, Input, Output, EventEmitter } from 'angular2/core';
+import { AnalysisMapService } from './map.service';
 import { Map, MapView } from 'esri-mods';
 
 @Component({
     selector: 'esri-map-view',
     template: '<div></div>',
-    providers: [MapService/*, ViewCoordinationService*/]
+    providers: [AnalysisMapService]
 })
 export class EsriMapViewComponent {
+    @Input() zoom: number;
+    @Input() centerLng: number;
+    @Input() centerLat: number;
+    @Input() rotation: number;
+
     @Output() viewCreated = new EventEmitter();
 
-    view: null;
+    view: any = null;
 
     constructor(
-        private _mapService: MapService,
-        private _viewCoordinationService: ViewCoordinationService,
+        private _mapService: AnalysisMapService,
         private elRef: ElementRef
     ) {}
 
@@ -23,17 +26,13 @@ export class EsriMapViewComponent {
         this.view = new MapView({
             container: this.elRef.nativeElement.firstChild,
             map: this._mapService.map,
-            zoom: this._viewCoordinationService.zoom,
-            center: this._viewCoordinationService.center,
-            rotation: this._viewCoordinationService.rotation
+            zoom: this.zoom,
+            center: [this.centerLng, this.centerLat],
+            rotation: this.rotation
         });
 
         this.view.then(function(view) {
             this.viewCreated.next(view);
-        }.bind(this));
-
-        this.view.watch('zoom,center,rotation', function(newVal, oldVal, propertyName) {
-            this._viewCoordinationService.setValue(newVal, propertyName);
         }.bind(this));
     }
 }
