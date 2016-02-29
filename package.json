@@ -1,5 +1,5 @@
 {
-    "name": "angular2-esri-map",
+    "name": "angular2-esri-playground",
     "version": "1.0.0",
     "scripts": {
         "start": "concurrent \"npm run tsc:w\" \"npm run lite\" ",
