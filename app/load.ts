@@ -1,6 +1,17 @@
 declare var System: any;
+declare var esriSystem: any;
 
-const deps = [
+// configure SystemJS
+System.config({
+    packages: {
+        app: {
+            defaultExtension: 'js'
+        }
+    }
+});
+
+// load Esri modules with the help of esri-system-js library
+esriSystem.register([
     'esri/geometry/Point',
     'esri/geometry/geometryEngineAsync',
     
@@ -13,38 +24,13 @@ const deps = [
     
     'esri/symbols/SimpleLineSymbol',
     'esri/symbols/SimpleFillSymbol',
-    
+
     'esri/views/MapView',
-    'esri/views/SceneView',
-];
-const moduleName = (name) => name.match(/[^\/]+$/).shift();
-
-System.config({
-    packages: {
-        app: {
-            defaultExtension: 'js'
-        }
-    }
-});
-
-function register(name: string, mods: any[]) {
-    System.register(name, [], exp => {
-        return {
-            setters: [],
-            execute: () => {
-                mods.map((mod: any, idx: number) => {
-                    exp(moduleName(deps[idx]), mod);
-                });
-            }
-        }
-    });
-}
-
-// this is actually Dojo require, not System require
-require(deps, function(...modules) {
-    register('esri-mods', modules);
-
+    'esri/views/SceneView'
+], function() {
     // bootstrap the app
     System.import('app/main')
         .then(null, console.error.bind(console));
+}, {
+    outModuleName: 'esri-mods'
 });
