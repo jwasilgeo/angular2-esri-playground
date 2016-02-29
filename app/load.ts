@@ -3,11 +3,19 @@ declare var System: any;
 const deps = [
     'esri/geometry/Point',
     'esri/geometry/geometryEngineAsync',
+    
+    'esri/Graphic',
+    
+    'esri/layers/FeatureLayer',
     'esri/layers/GraphicsLayer',
-    'esri/layers/VectorTileLayer',
+    
     'esri/Map',
+    
+    'esri/symbols/SimpleLineSymbol',
+    'esri/symbols/SimpleFillSymbol',
+    
     'esri/views/MapView',
-    'esri/views/SceneView'
+    'esri/views/SceneView',
 ];
 const moduleName = (name) => name.match(/[^\/]+$/).shift();
 

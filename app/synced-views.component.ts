@@ -5,9 +5,15 @@ import { BrowserDetectionService } from './browser-detection.service';
 
 @Component({
     selector: 'synced-views',
+    styles: [`
+        .label-override {
+            margin-left: 0;
+            margin-right: 1em;
+        }
+        `],
     template: 
         `
-        <h4 *ngIf="isMobile">{{ isMobileMessage }} <span class="label warning">Warning</span></h4>
+        <h4 *ngIf="isMobile"><span class="label warning label-override">Warning</span> {{ isMobileMessage }}</h4>
         
         <div class="tabs two" *ngIf="!isMobile">
             <input id='tab-1' type='radio' name='tabgroupB' checked />

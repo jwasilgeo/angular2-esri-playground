@@ -1,6 +1,9 @@
 import { Component } from 'angular2/core';
 import { RouteConfig, ROUTER_DIRECTIVES, ROUTER_PROVIDERS } from 'angular2/router';
+
 // import { ViewCoordinationService } from './view-coordination.service';
+import { MapService } from './map.service';
+
 import { IntroComponent } from './intro.component';
 import { SyncedViewsComponent } from './synced-views.component';
 import { GeometryEngineShowcaseComponent } from './geometry-engine-showcase.component';
@@ -26,6 +29,9 @@ import { GeometryEngineShowcaseComponent } from './geometry-engine-showcase.comp
 @Component({
     selector: 'my-app',
     styles: [`
+        nav {
+            background: #d1d1d1;
+        }
         section {
             width: 90%;
             max-width: 1200px;
@@ -34,7 +40,7 @@ import { GeometryEngineShowcaseComponent } from './geometry-engine-showcase.comp
         }
         `],
     template: `
-        <nav class="">
+        <nav>
             <a href="#" class="brand">
                 <span>Angular 2 + Esri 4</span>
             </a>
@@ -59,6 +65,6 @@ import { GeometryEngineShowcaseComponent } from './geometry-engine-showcase.comp
         </main>
         `,
     directives: [ROUTER_DIRECTIVES],
-    providers: [ROUTER_PROVIDERS/*, ViewCoordinationService*/]
+    providers: [ROUTER_PROVIDERS, MapService]
 })
 export class AppComponent { }

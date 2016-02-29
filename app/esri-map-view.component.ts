@@ -6,7 +6,7 @@ import { Map, MapView } from 'esri-mods';
     selector: 'esri-map-view',
     template: '<div></div>',
     // template: '<div (zoom)="zoom" (center)="center" (rotation)="rotation"></div>',
-    providers: [MapService]
+    // providers: [MapService]
 })
 export class EsriMapViewComponent {
     @Input() zoom: number;
@@ -25,8 +25,6 @@ export class EsriMapViewComponent {
     ) {}
 
     ngOnInit() {
-        console.log(this.zoom, this.center, this.rotation);
-
         this.view = new MapView({
             container: this.elRef.nativeElement.firstChild,
             map: this._mapService.map,

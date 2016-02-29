@@ -6,7 +6,7 @@ import { Map, SceneView } from 'esri-mods';
 @Component({
     selector: 'esri-scene-view',
     template: '<div></div>',
-    providers: [MapService]
+    // providers: [MapService]
 })
 export class EsriSceneViewComponent {
     @Output() viewCreated = new EventEmitter();
