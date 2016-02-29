@@ -7,9 +7,14 @@ import { Component } from 'angular2/core';
         <div>
             Features
             <ul>
-                <li>Angular 2 with routing</li>
-                <li><a href="https://developers.arcgis.com/javascript/beta/">Esri 4.x JSAPI</a></li>
-                <li>Custom view coordination service to help keep views in sync</li>
+                <li><a href="https://developers.arcgis.com/javascript/beta/">Esri 4.x JSAPI</a> for 2D and 3D mapping</li>
+                <li>Angular 2 with routing
+                    <ul>
+                        <li>Map view and scene view components</li>
+                        <li>Custom view coordination service to keep scene views in sync</li>
+                        <li>Vector GIS analysis in the browser</li>
+                    </ul>
+                </li>
                 <li><a href="http://picnicss.com/">Picnic CSS</a></li>
             </ul>
         </div>

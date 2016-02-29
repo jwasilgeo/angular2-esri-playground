@@ -29,17 +29,21 @@ import { BrowserDetectionService } from './browser-detection.service';
                 </div>
             </div>
         </div>
+        
         <p>This example demonstrates two different Esri scene views that share the same Esri map. Explore them by switching between the tabs above.</p>
-        <p>A custom Angular2 service keeps track of changes in the current view's camera position properties, so that when switching between tabs, the next view you interact with will be in the same position.</p>
-        <p>Go ahead—we all know you want to click on stuff—set some options to help illustrate this concept:</p>
-        <label>
-            <input #delaySyncCB type="checkbox" [checked]="delaySync" (change)="delaySync = delaySyncCB.checked" [disabled]="disableSync">
-            <span class="checkable" [style.text-decoration]="disableSync ? 'line-through' : 'none'">Delay syncing</span>
-        </label>
-        <label>
-            <input #disableSyncCB type="checkbox" [checked]="disableSync" (change)="disableSync = disableSyncCB.checked">
-            <span class="checkable">Disable syncing</span>
-        </label>
+        <p>A custom Angular 2 service keeps track of changes in the current view's camera position properties, so that when switching between tabs, the next view you interact with will be in the same position.</p>
+        
+        <div *ngIf="!isMobile">
+            <p>Go ahead—we all know you want to click on stuff—set some options to help illustrate this concept:</p>
+            <label>
+                <input #delaySyncCB type="checkbox" [checked]="delaySync" (change)="delaySync = delaySyncCB.checked" [disabled]="disableSync">
+                <span class="checkable" [style.text-decoration]="disableSync ? 'line-through' : 'none'">Delay syncing</span>
+            </label>
+            <label>
+                <input #disableSyncCB type="checkbox" [checked]="disableSync" (change)="disableSync = disableSyncCB.checked">
+                <span class="checkable">Disable syncing</span>
+            </label>
+        </div>
         `,
      directives: [EsriSceneViewComponent],
      providers: [ViewCoordinationService, BrowserDetectionService]

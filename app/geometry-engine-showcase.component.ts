@@ -37,7 +37,7 @@ import { geometryEngineAsync, Graphic, SimpleFillSymbol, SimpleLineSymbol } from
         </esri-map-view>
 
         <span class="workflow">Workflow: create geodesic buffer &rarr; create convex hull &rarr; calculate buffer and convex hull areas</span>
-        
+
         <p>Change the buffer distance to begin:</p>
         <div>
             <input type="range" min="10" max="300" step="5"
@@ -49,30 +49,26 @@ import { geometryEngineAsync, Graphic, SimpleFillSymbol, SimpleLineSymbol } from
         </div>
         
         <ul>
-            <li>volcanoes in extent: {{ featureCount }}</li>
+            <li>volcanoes buffered in extent: {{ featureCount }}</li>
             <li>unioned buffer area: {{ bufferPolygonSize | number:'1.1-1' }} km<sup>2</sup></li>
             <li>convex hull area: {{ convexHullPolygonSize | number:'1.1-1' }} km<sup>2</sup></li>
         </ul>
 
         <div class="card">
-            <p><span class="label label-override">Info</span>This Esri map view was created with a custom Angular2 component with several <code>@Input</code> bindings:</p>
-            <pre><code>&lt;esri-map-view zoom="6" centerLng="-18.5" centerLat="65" rotation="180"&gt;&lt;/esri-map-view&gt;</code></pre>
+            <p><span class="label label-override">Info</span>This Esri map view was created with a custom Angular 2 component with several <code>@Input</code> bindings and an <code>EventEmitter()</code> event binding:</p>
+            <pre>
+<code>&lt;esri-map-view #mapView (viewCreated)="setView(mapView.view)"
+    zoom="6" centerLng="-18.5" centerLat="65" rotation="180"&gt;
+&lt;/esri-map-view&gt;</code>
+            </pre>
         </div>
         `,
-        // <esri-map-view zoom="3" center="[-169, 65]" rotation="75"></esri-map-view>
-        /*<esri-map-view #mapView (viewCreated)="setView(mapView.view)"
-            zoom="3" centerLng="-169" centerLat="65" rotation="180">
-        </esri-map-view>*/
-        /*<esri-map-view #mapView (viewCreated)="setView(mapView.view)"
-            zoom="6" centerLng="115.5" centerLat="-7.75" rotation="180">
-        </esri-map-view>*/
-        /*<esri-map-view #mapView (viewCreated)="setView(mapView.view)"
-            zoom="6" centerLng="-18.5" centerLat="65" rotation="180">
-        </esri-map-view>*/
+
         /*<esri-scene-view #geSceneView (viewCreated)="setView(geSceneView.view)"></esri-scene-view>*/
     
     /*directives: [EsriSceneViewComponent],
     providers: [ViewCoordinationService]*/
+
     directives: [EsriMapViewComponent]
 })
 export class GeometryEngineShowcaseComponent {

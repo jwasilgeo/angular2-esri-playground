@@ -1,9 +1,6 @@
 import { Component } from 'angular2/core';
 import { RouteConfig, ROUTER_DIRECTIVES, ROUTER_PROVIDERS } from 'angular2/router';
 
-// import { ViewCoordinationService } from './view-coordination.service';
-import { MapService } from './map.service';
-
 import { IntroComponent } from './intro.component';
 import { SyncedViewsComponent } from './synced-views.component';
 import { GeometryEngineShowcaseComponent } from './geometry-engine-showcase.component';
@@ -27,11 +24,8 @@ import { GeometryEngineShowcaseComponent } from './geometry-engine-showcase.comp
     }
 ])
 @Component({
-    selector: 'my-app',
+    selector: 'playground-app',
     styles: [`
-        nav {
-            background: #d1d1d1;
-        }
         section {
             width: 90%;
             max-width: 1200px;
@@ -65,6 +59,6 @@ import { GeometryEngineShowcaseComponent } from './geometry-engine-showcase.comp
         </main>
         `,
     directives: [ROUTER_DIRECTIVES],
-    providers: [ROUTER_PROVIDERS, MapService]
+    providers: [ROUTER_PROVIDERS]
 })
 export class AppComponent { }

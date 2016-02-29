@@ -1,12 +1,12 @@
 import { Component, ElementRef, Output, EventEmitter } from 'angular2/core';
-import { MapService } from './map.service';
+import { SimpleMapService } from './map.service';
 import { ViewCoordinationService } from './view-coordination.service';
 import { Map, SceneView } from 'esri-mods';
 
 @Component({
     selector: 'esri-scene-view',
     template: '<div></div>',
-    // providers: [MapService]
+    providers: [SimpleMapService]
 })
 export class EsriSceneViewComponent {
     @Output() viewCreated = new EventEmitter();
@@ -14,7 +14,7 @@ export class EsriSceneViewComponent {
     view: null;
 
     constructor(
-        private _mapService: MapService,
+        private _mapService: SimpleMapService,
         private _viewCoordinationService: ViewCoordinationService,
         private elRef: ElementRef
     ) {}
