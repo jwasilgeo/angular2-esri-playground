@@ -11,7 +11,7 @@ System.register(['esri-mods', 'angular2/core'], function(exports_1, context_1) {
         if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
     };
     var esri_mods_1, core_1;
-    var MapService;
+    var SimpleMapService, AnalysisMapService;
     return {
         setters:[
             function (esri_mods_1_1) {
@@ -21,20 +21,42 @@ System.register(['esri-mods', 'angular2/core'], function(exports_1, context_1) {
                 core_1 = core_1_1;
             }],
         execute: function() {
-            MapService = (function () {
-                function MapService() {
+            SimpleMapService = (function () {
+                function SimpleMapService() {
                     this.map = null;
                     this.map = new esri_mods_1.Map({
                         basemap: 'satellite'
                     });
                 }
-                MapService = __decorate([
+                SimpleMapService = __decorate([
                     core_1.Injectable(), 
                     __metadata('design:paramtypes', [])
-                ], MapService);
-                return MapService;
+                ], SimpleMapService);
+                return SimpleMapService;
             }());
-            exports_1("MapService", MapService);
+            exports_1("SimpleMapService", SimpleMapService);
+            AnalysisMapService = (function () {
+                function AnalysisMapService() {
+                    this.map = null;
+                    this.map = new esri_mods_1.Map({
+                        basemap: 'satellite',
+                        layers: [
+                            new esri_mods_1.GraphicsLayer({
+                                id: 'analysisLayer'
+                            }),
+                            new esri_mods_1.FeatureLayer({
+                                url: '//services.arcgis.com/BG6nSlhZSAWtExvp/arcgis/rest/services/World_Volcanoes/FeatureServer/0',
+                                id: 'volcanoesLayer'
+                            })]
+                    });
+                }
+                AnalysisMapService = __decorate([
+                    core_1.Injectable(), 
+                    __metadata('design:paramtypes', [])
+                ], AnalysisMapService);
+                return AnalysisMapService;
+            }());
+            exports_1("AnalysisMapService", AnalysisMapService);
         }
     }
 });

@@ -1,11 +1,14 @@
 var deps = [
     'esri/geometry/Point',
     'esri/geometry/geometryEngineAsync',
+    'esri/Graphic',
+    'esri/layers/FeatureLayer',
     'esri/layers/GraphicsLayer',
-    'esri/layers/VectorTileLayer',
     'esri/Map',
+    'esri/symbols/SimpleLineSymbol',
+    'esri/symbols/SimpleFillSymbol',
     'esri/views/MapView',
-    'esri/views/SceneView'
+    'esri/views/SceneView',
 ];
 var moduleName = function (name) { return name.match(/[^\/]+$/).shift(); };
 System.config({

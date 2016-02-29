@@ -19,7 +19,6 @@ System.register(['angular2/core'], function(exports_1, context_1) {
             }],
         execute: function() {
             ViewCoordinationService = (function () {
-                // sceneView: null;
                 function ViewCoordinationService() {
                     this.camera = null;
                     this.center = null;
@@ -29,9 +28,6 @@ System.register(['angular2/core'], function(exports_1, context_1) {
                     this.center = [19.937, 50.061];
                     this.rotation = 0;
                 }
-                /*setSceneView(view) {
-                    this.sceneView = view;
-                }*/
                 ViewCoordinationService.prototype.setValue = function (newVal, propertyName) {
                     if (propertyName === 'center') {
                         newVal = [newVal.longitude, newVal.latitude];

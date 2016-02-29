@@ -68,9 +68,9 @@ System.register(['angular2/core', './map.service', './view-coordination.service'
                     core_1.Component({
                         selector: 'esri-scene-view',
                         template: '<div></div>',
-                        providers: [map_service_1.MapService]
+                        providers: [map_service_1.SimpleMapService]
                     }), 
-                    __metadata('design:paramtypes', [map_service_1.MapService, view_coordination_service_1.ViewCoordinationService, core_1.ElementRef])
+                    __metadata('design:paramtypes', [map_service_1.SimpleMapService, view_coordination_service_1.ViewCoordinationService, core_1.ElementRef])
                 ], EsriSceneViewComponent);
                 return EsriSceneViewComponent;
             }());

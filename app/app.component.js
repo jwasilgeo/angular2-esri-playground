@@ -1,4 +1,4 @@
-System.register(['angular2/core', 'angular2/router', './view-coordination.service', './intro.component', './synced-views.component'], function(exports_1, context_1) {
+System.register(['angular2/core', 'angular2/router', './intro.component', './synced-views.component', './geometry-engine-showcase.component'], function(exports_1, context_1) {
     "use strict";
     var __moduleName = context_1 && context_1.id;
     var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
@@ -10,7 +10,7 @@ System.register(['angular2/core', 'angular2/router', './view-coordination.servic
     var __metadata = (this && this.__metadata) || function (k, v) {
         if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
     };
-    var core_1, router_1, view_coordination_service_1, intro_component_1, synced_views_component_1;
+    var core_1, router_1, intro_component_1, synced_views_component_1, geometry_engine_showcase_component_1;
     var AppComponent;
     return {
         setters:[
@@ -20,18 +20,16 @@ System.register(['angular2/core', 'angular2/router', './view-coordination.servic
             function (router_1_1) {
                 router_1 = router_1_1;
             },
-            function (view_coordination_service_1_1) {
-                view_coordination_service_1 = view_coordination_service_1_1;
-            },
             function (intro_component_1_1) {
                 intro_component_1 = intro_component_1_1;
             },
             function (synced_views_component_1_1) {
                 synced_views_component_1 = synced_views_component_1_1;
+            },
+            function (geometry_engine_showcase_component_1_1) {
+                geometry_engine_showcase_component_1 = geometry_engine_showcase_component_1_1;
             }],
         execute: function() {
-            // import { EsriMapViewComponent } from './esri-map-view.component';
-            // import { EsriSceneViewComponent } from './esri-scene-view.component';
             AppComponent = (function () {
                 function AppComponent() {
                 }
@@ -47,26 +45,19 @@ System.register(['angular2/core', 'angular2/router', './view-coordination.servic
                             path: '/synced-views',
                             name: 'SyncedViews',
                             component: synced_views_component_1.SyncedViewsComponent
-                        } /*,
-                        {
-                            path: '/esri-map-view',
-                            name: 'EsriMapView',
-                            component: EsriMapViewComponent
                         },
                         {
-                            path: '/esri-scene-view',
-                            name: 'EsriSceneView',
-                            component: EsriSceneViewComponent
-                        }*/
+                            path: '/geom-engine-showcase',
+                            name: 'GeometryEngineShowcase',
+                            component: geometry_engine_showcase_component_1.GeometryEngineShowcaseComponent
+                        }
                     ]),
                     core_1.Component({
-                        selector: 'my-app',
+                        selector: 'playground-app',
                         styles: ["\n        section {\n            width: 90%;\n            max-width: 1200px;\n            margin: 0 auto;\n            padding: 4em 0 0 0;\n        }\n        "],
-                        template: "\n        <nav class=\"\">\n            <a href=\"#\" class=\"brand\">\n                <span>Angular 2 + Esri 4</span>\n            </a>\n\n            <!-- responsive-->\n            <input id=\"bmenub\" type=\"checkbox\" class=\"show\">\n            <label for=\"bmenub\" class=\"burger pseudo button\">menu</label>\n\n            <div class=\"menu\">\n                <a class=\"pseudo button\" [routerLink]=\"['Intro']\">Intro</a>\n                <a class=\"button\" [routerLink]=\"['SyncedViews']\">Synced Views</a>\n                <a class=\"pseudo button\" href=\"https://github.com/jwasilgeo/angular2-esri-playground\">Github</a>\n                <a class=\"pseudo button\" href=\"https://twitter.com/JWasilGeo\">@JWasilGeo</a>\n            </div>\n        </nav>\n        <main>\n            <section>\n                <router-outlet></router-outlet>\n            </section>\n        </main>\n        ",
-                        // <a class="button" [routerLink]="['EsriMapView']">Map View</a>
-                        // <a class="button" [routerLink]="['EsriSceneView']">Scene View</a>
+                        template: "\n        <nav>\n            <a href=\"#\" class=\"brand\">\n                <span>Angular 2 + Esri 4</span>\n            </a>\n\n            <!-- responsive-->\n            <input id=\"bmenub\" type=\"checkbox\" class=\"show\">\n            <label for=\"bmenub\" class=\"burger pseudo button\">\u2261</label>\n\n            <div class=\"menu\">\n                <a class=\"pseudo button\" [routerLink]=\"['Intro']\">Intro</a>\n                <a class=\"button\" [routerLink]=\"['SyncedViews']\">Synced 3D Views</a>\n                <a class=\"button\" [routerLink]=\"['GeometryEngineShowcase']\">Geometry Engine</a>\n\n                <a class=\"pseudo button\" href=\"https://github.com/jwasilgeo/angular2-esri-playground\">Github</a>\n                <a class=\"pseudo button\" href=\"https://twitter.com/JWasilGeo\">@JWasilGeo</a>\n            </div>\n        </nav>\n        <main>\n            <section>\n                <router-outlet></router-outlet>\n            </section>\n        </main>\n        ",
                         directives: [router_1.ROUTER_DIRECTIVES],
-                        providers: [router_1.ROUTER_PROVIDERS, view_coordination_service_1.ViewCoordinationService]
+                        providers: [router_1.ROUTER_PROVIDERS]
                     }), 
                     __metadata('design:paramtypes', [])
                 ], AppComponent);
