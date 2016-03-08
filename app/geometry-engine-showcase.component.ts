@@ -42,12 +42,12 @@ import { geometryEngineAsync, Graphic, SimpleFillSymbol, SimpleLineSymbol } from
 
         <p>Change the buffer distance to begin:</p>
         <div>
-            <input type="range" min="10" max="300" step="5"
+            <input type="range" min="10" max="300" value="30" step="5"
                 class="rangeSlider"
                 [ngFormControl]="bufferDistanceControl">
             <span>{{ bufferDistanceDisplay }} km</span>
         </div>
-        
+
         <ul>
             <li>volcanoes buffered in extent: {{ featureCount }}</li>
             <li>unioned buffer area: {{ bufferPolygonSize | number:'1.1-1' }} km<sup>2</sup></li>
@@ -66,21 +66,27 @@ import { geometryEngineAsync, Graphic, SimpleFillSymbol, SimpleLineSymbol } from
     directives: [EsriMapViewComponent]
 })
 export class GeometryEngineShowcaseComponent {
-    viewReference: null;
-    volcanoesLayer: null;
-    volcanoesLayerView: null;
-    analysisLayer: null;
-    featureCount: 0;
-    bufferPolygonSize: 0;
-    convexHullPolygonSize: 0;
+    viewReference: any;
+    volcanoesLayer: any;
+    volcanoesLayerView: any;
+    analysisLayer: any;
+    featureCount = 0;
+    bufferPolygonSize = 0;
+    convexHullPolygonSize = 0;
 
-    bufferDistanceDisplay: 30;
-    bufferDistance: Observable<number>;
+    bufferDistanceDisplay = 0;
     bufferDistanceControl = new Control();
 
-    constructor() {
-        this.bufferDistance = this.bufferDistanceControl.valueChanges
-            .debounceTime(200)
+    ngOnInit() {
+        // when use moves slider
+        // 1) live update UI
+        this.bufferDistanceControl.valueChanges
+            .subscribe(n => {
+                this.bufferDistanceDisplay = n;
+            });
+        // 2) start analysis after user is done sliding
+        this.bufferDistanceControl.valueChanges
+            .debounceTime(300)
             .distinctUntilChanged()
             .subscribe(n => this.startAnalysis(n));
     }
@@ -105,7 +111,7 @@ export class GeometryEngineShowcaseComponent {
 
         // STEP 0.B
         // update template bindings
-        this.bufferDistanceDisplay = bufferDistance;
+        // this.bufferDistanceDisplay = bufferDistance;
         this.featureCount = geomsInExtent.length;
 
         // STEP 1
@@ -135,7 +141,7 @@ export class GeometryEngineShowcaseComponent {
             // STEP 2
             // calculate the convex hull geometry
             geometryEngineAsync.convexHull(bufferGeometry, true).then(function(convexHullGeometry) {
-                
+
                 // STEP 2.A
                 // calculate area and update template binding
                 geometryEngineAsync.geodesicArea(convexHullGeometry, 'square-kilometers').then(function(res) {
@@ -154,7 +160,7 @@ export class GeometryEngineShowcaseComponent {
                         })
                     })
                 });
-                
+
                 // STEP 3
                 // add both the buffer and convex hull graphics to the map
                 this.addAnalysisResultsToMap(bufferGraphic, convexHullGraphic)
