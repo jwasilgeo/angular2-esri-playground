@@ -1,8 +1,8 @@
 import { Component, ViewChildren } from 'angular2/core';
 
+// Observables and RxJS
 import { Control } from 'angular2/common';
 import { Observable } from 'rxjs/Observable';
-import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/debounceTime';
 import 'rxjs/add/operator/distinctUntilChanged';
 
@@ -44,9 +44,8 @@ import { geometryEngineAsync, Graphic, SimpleFillSymbol, SimpleLineSymbol } from
         <div>
             <input type="range" min="10" max="300" step="5"
                 class="rangeSlider"
-                [ngFormControl]="bufferDistanceControl"
-                [value]="bufferDistance">
-            <span>{{ bufferDistance }} km</span>
+                [ngFormControl]="bufferDistanceControl">
+            <span>{{ bufferDistanceDisplay }} km</span>
         </div>
         
         <ul>
@@ -71,11 +70,11 @@ export class GeometryEngineShowcaseComponent {
     volcanoesLayer: null;
     volcanoesLayerView: null;
     analysisLayer: null;
-    // bufferDistance: 30;
     featureCount: 0;
     bufferPolygonSize: 0;
     convexHullPolygonSize: 0;
 
+    bufferDistanceDisplay: 30;
     bufferDistance: Observable<number>;
     bufferDistanceControl = new Control();
 
@@ -83,7 +82,7 @@ export class GeometryEngineShowcaseComponent {
         this.bufferDistance = this.bufferDistanceControl.valueChanges
             .debounceTime(200)
             .distinctUntilChanged()
-            .forEach(n => this.startBuffering(n));
+            .subscribe(n => this.startAnalysis(n));
     }
 
     setView(viewRef) {
@@ -93,31 +92,34 @@ export class GeometryEngineShowcaseComponent {
         this.analysisLayer = this.viewReference.map.getLayer('analysisLayer');
     }
 
-    startBuffering(bufferDistance) {
-        console.log(bufferDistance);
+    startAnalysis(bufferDistance) {
         if (!this.volcanoesLayerView) {
             // just in case this wasn't ready or available in setView method
             this.volcanoesLayerView = this.viewReference.getLayerView(this.volcanoesLayer);
         }
 
+        // STEP 0.A
+        // filter to get point geometries within the current view extent
         var geoms = this.volcanoesLayerView.graphics.map(g => g.geometry);
-        // var geoms = this.volcanoesLayerView._graphicsCollection.map(g => g.geometry);
+        var geomsInExtent = geoms.filter(geom => this.viewReference.extent.contains(geom));
 
-        geoms = geoms.filter(geom => this.viewReference.extent.contains(geom));
-
+        // STEP 0.B
         // update template bindings
-        this.bufferDistance = bufferDistance;
-        this.featureCount = geoms.length;
+        this.bufferDistanceDisplay = bufferDistance;
+        this.featureCount = geomsInExtent.length;
 
+        // STEP 1
         // calculate the geodesic buffer geometry with unioned outputs
-        geometryEngineAsync.geodesicBuffer(geoms.items, this.bufferDistance, 'kilometers', true).then(function(bufferGeometries) {
+        geometryEngineAsync.geodesicBuffer(geomsInExtent.items, bufferDistance, 'kilometers', true).then(function(bufferGeometries) {
             var bufferGeometry = bufferGeometries[0];
 
+            // STEP 1.A
             // calculate area and update template binding
             geometryEngineAsync.geodesicArea(bufferGeometry, 'square-kilometers').then(function(res) {
                 this.bufferPolygonSize = res;
             }.bind(this));
 
+            // STEP 1.B
             // create a graphic to display the new unioned buffer geometry
             var bufferGraphic = new Graphic({
                 geometry: bufferGeometry,
@@ -130,13 +132,17 @@ export class GeometryEngineShowcaseComponent {
                 })
             });
 
+            // STEP 2
             // calculate the convex hull geometry
             geometryEngineAsync.convexHull(bufferGeometry, true).then(function(convexHullGeometry) {
+                
+                // STEP 2.A
                 // calculate area and update template binding
                 geometryEngineAsync.geodesicArea(convexHullGeometry, 'square-kilometers').then(function(res) {
                     this.convexHullPolygonSize = res;
                 }.bind(this));
 
+                // STEP 2.B
                 // create a graphic to display the new convex hull geometry
                 var convexHullGraphic = new Graphic({
                     geometry: convexHullGeometry,
@@ -149,6 +155,7 @@ export class GeometryEngineShowcaseComponent {
                     })
                 });
                 
+                // STEP 3
                 // add both the buffer and convex hull graphics to the map
                 this.addAnalysisResultsToMap(bufferGraphic, convexHullGraphic)
             }.bind(this));
