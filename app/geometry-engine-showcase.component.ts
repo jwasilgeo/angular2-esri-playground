@@ -1,10 +1,12 @@
 import { Component, ViewChildren } from 'angular2/core';
 
-// import { ViewCoordinationService } from './view-coordination.service';
-// import { EsriSceneViewComponent } from './esri-scene-view.component';
+import { Control } from 'angular2/common';
+import { Observable } from 'rxjs/Observable';
+import 'rxjs/add/operator/map';
+import 'rxjs/add/operator/debounceTime';
+import 'rxjs/add/operator/distinctUntilChanged';
 
 import { EsriMapViewComponent } from './esri-map-view.component';
-
 import { geometryEngineAsync, Graphic, SimpleFillSymbol, SimpleLineSymbol } from 'esri-mods';
 
 @Component({
@@ -42,9 +44,8 @@ import { geometryEngineAsync, Graphic, SimpleFillSymbol, SimpleLineSymbol } from
         <div>
             <input type="range" min="10" max="300" step="5"
                 class="rangeSlider"
-                [value]="bufferDistance"
-                (input)="startBuffering($event.target.value)"
-                (change)="startBuffering($event.target.value)">
+                [ngFormControl]="bufferDistanceControl"
+                [value]="bufferDistance">
             <span>{{ bufferDistance }} km</span>
         </div>
         
@@ -63,12 +64,6 @@ import { geometryEngineAsync, Graphic, SimpleFillSymbol, SimpleLineSymbol } from
             </pre>
         </div>
         `,
-
-        /*<esri-scene-view #geSceneView (viewCreated)="setView(geSceneView.view)"></esri-scene-view>*/
-    
-    /*directives: [EsriSceneViewComponent],
-    providers: [ViewCoordinationService]*/
-
     directives: [EsriMapViewComponent]
 })
 export class GeometryEngineShowcaseComponent {
@@ -76,12 +71,20 @@ export class GeometryEngineShowcaseComponent {
     volcanoesLayer: null;
     volcanoesLayerView: null;
     analysisLayer: null;
-    bufferDistance: 30;
+    // bufferDistance: 30;
     featureCount: 0;
     bufferPolygonSize: 0;
     convexHullPolygonSize: 0;
 
-    constructor() { }
+    bufferDistance: Observable<number>;
+    bufferDistanceControl = new Control();
+
+    constructor() {
+        this.bufferDistance = this.bufferDistanceControl.valueChanges
+            .debounceTime(200)
+            .distinctUntilChanged()
+            .forEach(n => this.startBuffering(n));
+    }
 
     setView(viewRef) {
         this.viewReference = viewRef;
@@ -91,6 +94,7 @@ export class GeometryEngineShowcaseComponent {
     }
 
     startBuffering(bufferDistance) {
+        console.log(bufferDistance);
         if (!this.volcanoesLayerView) {
             // just in case this wasn't ready or available in setView method
             this.volcanoesLayerView = this.viewReference.getLayerView(this.volcanoesLayer);
