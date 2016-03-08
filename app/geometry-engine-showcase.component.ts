@@ -1,10 +1,12 @@
 import { Component, ViewChildren } from 'angular2/core';
 
-// import { ViewCoordinationService } from './view-coordination.service';
-// import { EsriSceneViewComponent } from './esri-scene-view.component';
+// Observables and RxJS
+import { Control } from 'angular2/common';
+import { Observable } from 'rxjs/Observable';
+import 'rxjs/add/operator/debounceTime';
+import 'rxjs/add/operator/distinctUntilChanged';
 
 import { EsriMapViewComponent } from './esri-map-view.component';
-
 import { geometryEngineAsync, Graphic, SimpleFillSymbol, SimpleLineSymbol } from 'esri-mods';
 
 @Component({
@@ -40,14 +42,12 @@ import { geometryEngineAsync, Graphic, SimpleFillSymbol, SimpleLineSymbol } from
 
         <p>Change the buffer distance to begin:</p>
         <div>
-            <input type="range" min="10" max="300" step="5"
+            <input type="range" min="10" max="300" value="30" step="5"
                 class="rangeSlider"
-                [value]="bufferDistance"
-                (input)="startBuffering($event.target.value)"
-                (change)="startBuffering($event.target.value)">
-            <span>{{ bufferDistance }} km</span>
+                [ngFormControl]="bufferDistanceControl">
+            <span>{{ bufferDistanceDisplay }} km</span>
         </div>
-        
+
         <ul>
             <li>volcanoes buffered in extent: {{ featureCount }}</li>
             <li>unioned buffer area: {{ bufferPolygonSize | number:'1.1-1' }} km<sup>2</sup></li>
@@ -63,25 +63,33 @@ import { geometryEngineAsync, Graphic, SimpleFillSymbol, SimpleLineSymbol } from
             </pre>
         </div>
         `,
-
-        /*<esri-scene-view #geSceneView (viewCreated)="setView(geSceneView.view)"></esri-scene-view>*/
-    
-    /*directives: [EsriSceneViewComponent],
-    providers: [ViewCoordinationService]*/
-
     directives: [EsriMapViewComponent]
 })
 export class GeometryEngineShowcaseComponent {
-    viewReference: null;
-    volcanoesLayer: null;
-    volcanoesLayerView: null;
-    analysisLayer: null;
-    bufferDistance: 30;
-    featureCount: 0;
-    bufferPolygonSize: 0;
-    convexHullPolygonSize: 0;
+    viewReference: any;
+    volcanoesLayer: any;
+    volcanoesLayerView: any;
+    analysisLayer: any;
+    featureCount = 0;
+    bufferPolygonSize = 0;
+    convexHullPolygonSize = 0;
 
-    constructor() { }
+    bufferDistanceDisplay = 0;
+    bufferDistanceControl = new Control();
+
+    ngOnInit() {
+        // when use moves slider
+        // 1) live update UI
+        this.bufferDistanceControl.valueChanges
+            .subscribe(n => {
+                this.bufferDistanceDisplay = n;
+            });
+        // 2) start analysis after user is done sliding
+        this.bufferDistanceControl.valueChanges
+            .debounceTime(300)
+            .distinctUntilChanged()
+            .subscribe(n => this.startAnalysis(n));
+    }
 
     setView(viewRef) {
         this.viewReference = viewRef;
@@ -90,30 +98,34 @@ export class GeometryEngineShowcaseComponent {
         this.analysisLayer = this.viewReference.map.getLayer('analysisLayer');
     }
 
-    startBuffering(bufferDistance) {
+    startAnalysis(bufferDistance) {
         if (!this.volcanoesLayerView) {
             // just in case this wasn't ready or available in setView method
             this.volcanoesLayerView = this.viewReference.getLayerView(this.volcanoesLayer);
         }
 
+        // STEP 0.A
+        // filter to get point geometries within the current view extent
         var geoms = this.volcanoesLayerView.graphics.map(g => g.geometry);
-        // var geoms = this.volcanoesLayerView._graphicsCollection.map(g => g.geometry);
+        var geomsInExtent = geoms.filter(geom => this.viewReference.extent.contains(geom));
 
-        geoms = geoms.filter(geom => this.viewReference.extent.contains(geom));
-
+        // STEP 0.B
         // update template bindings
-        this.bufferDistance = bufferDistance;
-        this.featureCount = geoms.length;
+        // this.bufferDistanceDisplay = bufferDistance;
+        this.featureCount = geomsInExtent.length;
 
+        // STEP 1
         // calculate the geodesic buffer geometry with unioned outputs
-        geometryEngineAsync.geodesicBuffer(geoms.items, this.bufferDistance, 'kilometers', true).then(function(bufferGeometries) {
+        geometryEngineAsync.geodesicBuffer(geomsInExtent.items, bufferDistance, 'kilometers', true).then(function(bufferGeometries) {
             var bufferGeometry = bufferGeometries[0];
 
+            // STEP 1.A
             // calculate area and update template binding
             geometryEngineAsync.geodesicArea(bufferGeometry, 'square-kilometers').then(function(res) {
                 this.bufferPolygonSize = res;
             }.bind(this));
 
+            // STEP 1.B
             // create a graphic to display the new unioned buffer geometry
             var bufferGraphic = new Graphic({
                 geometry: bufferGeometry,
@@ -126,13 +138,17 @@ export class GeometryEngineShowcaseComponent {
                 })
             });
 
+            // STEP 2
             // calculate the convex hull geometry
             geometryEngineAsync.convexHull(bufferGeometry, true).then(function(convexHullGeometry) {
+
+                // STEP 2.A
                 // calculate area and update template binding
                 geometryEngineAsync.geodesicArea(convexHullGeometry, 'square-kilometers').then(function(res) {
                     this.convexHullPolygonSize = res;
                 }.bind(this));
 
+                // STEP 2.B
                 // create a graphic to display the new convex hull geometry
                 var convexHullGraphic = new Graphic({
                     geometry: convexHullGeometry,
@@ -144,7 +160,8 @@ export class GeometryEngineShowcaseComponent {
                         })
                     })
                 });
-                
+
+                // STEP 3
                 // add both the buffer and convex hull graphics to the map
                 this.addAnalysisResultsToMap(bufferGraphic, convexHullGraphic)
             }.bind(this));
