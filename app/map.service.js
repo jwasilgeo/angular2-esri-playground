@@ -1,4 +1,4 @@
-System.register(['esri-mods', 'angular2/core'], function(exports_1, context_1) {
+System.register(['angular2/core', 'esri-mods'], function(exports_1, context_1) {
     "use strict";
     var __moduleName = context_1 && context_1.id;
     var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
@@ -10,15 +10,15 @@ System.register(['esri-mods', 'angular2/core'], function(exports_1, context_1) {
     var __metadata = (this && this.__metadata) || function (k, v) {
         if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
     };
-    var esri_mods_1, core_1;
+    var core_1, esri_mods_1;
     var SimpleMapService, AnalysisMapService;
     return {
         setters:[
-            function (esri_mods_1_1) {
-                esri_mods_1 = esri_mods_1_1;
-            },
             function (core_1_1) {
                 core_1 = core_1_1;
+            },
+            function (esri_mods_1_1) {
+                esri_mods_1 = esri_mods_1_1;
             }],
         execute: function() {
             SimpleMapService = (function () {
