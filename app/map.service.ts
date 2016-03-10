@@ -1,5 +1,5 @@
+import { Injectable } from 'angular2/core';
 import { Map, FeatureLayer, GraphicsLayer } from 'esri-mods';
-import {Injectable} from 'angular2/core';
 
 @Injectable()
 export class SimpleMapService {
