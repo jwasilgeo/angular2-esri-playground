@@ -45,7 +45,7 @@ System.register(['angular2/core', './esri-scene-view.component', './view-coordin
                 };
                 __decorate([
                     core_1.ViewChildren(esri_scene_view_component_1.EsriSceneViewComponent), 
-                    __metadata('design:type', esri_scene_view_component_1.EsriSceneViewComponent)
+                    __metadata('design:type', Object)
                 ], SyncedViewsComponent.prototype, "sceneViewComponents", void 0);
                 SyncedViewsComponent = __decorate([
                     core_1.Component({

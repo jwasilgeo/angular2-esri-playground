@@ -2,10 +2,10 @@ import {Injectable} from 'angular2/core';
 
 @Injectable()
 export class ViewCoordinationService {
-    camera: null;
-    center: null;
-    zoom: null;
-    rotation: null;
+    camera: number = null;
+    center: number[] = null;
+    zoom: number = null;
+    rotation: number = null;
 
     constructor () {
         this.zoom = 15;

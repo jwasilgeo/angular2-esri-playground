@@ -47,7 +47,8 @@ System.register(['angular2/core', 'esri-mods'], function(exports_1, context_1) {
                             new esri_mods_1.FeatureLayer({
                                 url: '//services.arcgis.com/BG6nSlhZSAWtExvp/arcgis/rest/services/World_Volcanoes/FeatureServer/0',
                                 id: 'volcanoesLayer'
-                            })]
+                            })
+                        ]
                     });
                 }
                 AnalysisMapService = __decorate([
