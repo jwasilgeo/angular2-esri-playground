@@ -3,7 +3,7 @@ import { Map, FeatureLayer, GraphicsLayer } from 'esri-mods';
 
 @Injectable()
 export class SimpleMapService {
-    map: null;
+    map: any = null;
     constructor() {
         this.map = new Map({
             basemap: 'satellite'
@@ -13,7 +13,7 @@ export class SimpleMapService {
 
 @Injectable()
 export class AnalysisMapService {
-    map: null;
+    map: any = null;
     constructor() {
         this.map = new Map({
             basemap: 'satellite',
@@ -24,7 +24,7 @@ export class AnalysisMapService {
                 new FeatureLayer({
                     url: '//services.arcgis.com/BG6nSlhZSAWtExvp/arcgis/rest/services/World_Volcanoes/FeatureServer/0',
                     id: 'volcanoesLayer'
-                });
+                })
             ]
         });
     }

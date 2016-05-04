@@ -11,7 +11,7 @@ import { Map, SceneView } from 'esri-mods';
 export class EsriSceneViewComponent {
     @Output() viewCreated = new EventEmitter();
 
-    view: null;
+    view: any = null;
 
     constructor(
         private _mapService: SimpleMapService,
