@@ -49,10 +49,10 @@ import { BrowserDetectionService } from './browser-detection.service';
      providers: [ViewCoordinationService, BrowserDetectionService]
 })
 export class SyncedViewsComponent {
-    isMobile: false;
-    isMobileMessage: null;
-    delaySync: false;
-    disableSync: false;
+    isMobile: boolean = false;
+    isMobileMessage: string = null;
+    delaySync: boolean = false;
+    disableSync: boolean = false;
 
     constructor(private _browserSniffer: BrowserDetectionService) {
         this.isMobile = _browserSniffer.isMobile();
@@ -60,7 +60,7 @@ export class SyncedViewsComponent {
     }
 
     @ViewChildren(EsriSceneViewComponent)
-    sceneViewComponents: EsriSceneViewComponent
+    sceneViewComponents: any
 
     syncViews() {
         if (!this.disableSync) {
