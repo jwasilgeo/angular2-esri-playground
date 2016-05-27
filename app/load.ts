@@ -1,16 +1,8 @@
 declare var System: any;
 declare var esriSystem: any;
 
-// configure SystemJS
-System.config({
-    packages: {
-        app: {
-            defaultExtension: 'js'
-        }
-    }
-});
-
 // load Esri modules with the help of esri-system-js library
+// into a System.js module called esri-mods
 esriSystem.register([
     'esri/geometry/Point',
     'esri/geometry/geometryEngineAsync',
@@ -29,7 +21,8 @@ esriSystem.register([
     'esri/views/SceneView'
 ], function() {
     // bootstrap the app
-    System.import('app/main')
+    // System.import('app/main')
+    System.import('app')
         .then(null, console.error.bind(console));
 }, {
     outModuleName: 'esri-mods'

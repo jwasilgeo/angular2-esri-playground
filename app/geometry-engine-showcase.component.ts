@@ -1,7 +1,7 @@
-import { Component, ViewChildren } from 'angular2/core';
+import { Component, ViewChildren } from '@angular/core';
 
 // Observables and RxJS
-import { Control } from 'angular2/common';
+import { Control } from '@angular/common';
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/debounceTime';
 import 'rxjs/add/operator/distinctUntilChanged';
@@ -67,8 +67,7 @@ import { geometryEngineAsync, Graphic, SimpleFillSymbol, SimpleLineSymbol } from
 })
 export class GeometryEngineShowcaseComponent {
     viewReference: any;
-    volcanoesLayer: any;
-    volcanoesLayerView: any;
+    volcanoGeoms: any;
     analysisLayer: any;
     featureCount = 0;
     bufferPolygonSize = 0;
@@ -81,33 +80,42 @@ export class GeometryEngineShowcaseComponent {
         // when use moves slider
         // 1) live update UI
         this.bufferDistanceControl.valueChanges
-            .subscribe(n => {
-                this.bufferDistanceDisplay = n;
-            });
+            .subscribe(n => this.bufferDistanceDisplay = n);
         // 2) start analysis after user is done sliding
         this.bufferDistanceControl.valueChanges
-            .debounceTime(300)
+            .debounceTime(250)
             .distinctUntilChanged()
             .subscribe(n => this.startAnalysis(n));
     }
 
     setView(viewRef) {
         this.viewReference = viewRef;
-        this.volcanoesLayer = this.viewReference.map.getLayer('volcanoesLayer');
-        this.volcanoesLayerView = this.viewReference.getLayerView(this.volcanoesLayer); // this is used to access graphics array
-        this.analysisLayer = this.viewReference.map.getLayer('analysisLayer');
+
+        // inspect layers in the map to create layer or layerView references
+        this.viewReference.map.layers.forEach((layer) => {
+            // here we need a layerView reference
+            if (layer.id === 'volcanoesLayer') {
+                this.viewReference.whenLayerView(layer).then((layerView) => {
+                    layerView.watch('updating', (val) => {
+                        if (!val) { // wait for the layer view to finish updating
+                            layerView.queryFeatures().then((featureSet) => {
+                                this.volcanoGeoms = featureSet.map(feature => feature.geometry); // prints the array of client-side graphics to the console
+                            });
+                        }
+                    });
+                });
+            }
+            // here we just need a layer reference
+            if (layer.id === 'analysisLayer') {
+                this.analysisLayer = layer;
+            }
+        });
     }
 
     startAnalysis(bufferDistance) {
-        if (!this.volcanoesLayerView) {
-            // just in case this wasn't ready or available in setView method
-            this.volcanoesLayerView = this.viewReference.getLayerView(this.volcanoesLayer);
-        }
-
         // STEP 0.A
         // filter to get point geometries within the current view extent
-        var geoms = this.volcanoesLayerView.graphics.map(g => g.geometry);
-        var geomsInExtent = geoms.filter(geom => this.viewReference.extent.contains(geom));
+        var geomsInExtent = this.volcanoGeoms.filter(geom => this.viewReference.extent.contains(geom));
 
         // STEP 0.B
         // update template bindings
@@ -116,14 +124,14 @@ export class GeometryEngineShowcaseComponent {
 
         // STEP 1
         // calculate the geodesic buffer geometry with unioned outputs
-        geometryEngineAsync.geodesicBuffer(geomsInExtent.items, bufferDistance, 'kilometers', true).then(function(bufferGeometries) {
+        geometryEngineAsync.geodesicBuffer(geomsInExtent, bufferDistance, 'kilometers', true).then((bufferGeometries) => {
             var bufferGeometry = bufferGeometries[0];
 
             // STEP 1.A
             // calculate area and update template binding
-            geometryEngineAsync.geodesicArea(bufferGeometry, 'square-kilometers').then(function(res) {
+            geometryEngineAsync.geodesicArea(bufferGeometry, 'square-kilometers').then((res) => {
                 this.bufferPolygonSize = res;
-            }.bind(this));
+            });
 
             // STEP 1.B
             // create a graphic to display the new unioned buffer geometry
@@ -140,13 +148,13 @@ export class GeometryEngineShowcaseComponent {
 
             // STEP 2
             // calculate the convex hull geometry
-            geometryEngineAsync.convexHull(bufferGeometry, true).then(function(convexHullGeometry) {
+            geometryEngineAsync.convexHull(bufferGeometry, true).then((convexHullGeometry) => {
 
                 // STEP 2.A
                 // calculate area and update template binding
-                geometryEngineAsync.geodesicArea(convexHullGeometry, 'square-kilometers').then(function(res) {
+                geometryEngineAsync.geodesicArea(convexHullGeometry, 'square-kilometers').then((res) => {
                     this.convexHullPolygonSize = res;
-                }.bind(this));
+                });
 
                 // STEP 2.B
                 // create a graphic to display the new convex hull geometry
@@ -164,13 +172,13 @@ export class GeometryEngineShowcaseComponent {
                 // STEP 3
                 // add both the buffer and convex hull graphics to the map
                 this.addAnalysisResultsToMap(bufferGraphic, convexHullGraphic)
-            }.bind(this));
+            });
 
-        }.bind(this));
+        });
     }
 
     addAnalysisResultsToMap(...analysisGraphics) {
-        this.analysisLayer.clear();
-        this.analysisLayer.add(analysisGraphics);
+        this.analysisLayer.removeAll();
+        this.analysisLayer.addMany(analysisGraphics);
     }
 }

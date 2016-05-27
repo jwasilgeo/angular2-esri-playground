@@ -1,0 +1,6 @@
+/*.esri-icon-plus, .esri-icon-minus {
+    line-height: inherit;
+}*/
+.esri-view {
+    height: 500px;
+}

@@ -1,15 +1,14 @@
-import { bootstrap } from 'angular2/platform/browser';
+import { bootstrap } from '@angular/platform-browser-dynamic';
+import { ROUTER_PROVIDERS } from '@angular/router';
+// Add these symbols to override the `LocationStrategy`
+import { provide } from '@angular/core';
+import { LocationStrategy, HashLocationStrategy } from '@angular/common';
+
 import { AppComponent } from './app.component';
 
-// use the hash url location strategy, see:
-//  - https://angular.io/docs/ts/latest/guide/router.html#!#-hashlocationstrategy-
-//  - http://julienrenaux.fr/2015/12/25/angular2-series-routing/#HashLocationStrategy
-import { ROUTER_PROVIDERS, LocationStrategy, HashLocationStrategy } from 'angular2/router';
-import { provide } from 'angular2/core';
-
 bootstrap(AppComponent, [
-    ROUTER_PROVIDERS,
-    provide(LocationStrategy, {
-        useClass: HashLocationStrategy
-    })
+  ROUTER_PROVIDERS,
+  provide(LocationStrategy, {
+      useClass: HashLocationStrategy
+  })
 ]);

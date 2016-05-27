@@ -1,4 +1,4 @@
-import { Component, ElementRef, Output, EventEmitter } from 'angular2/core';
+import { Component, ElementRef, Output, EventEmitter } from '@angular/core';
 import { SimpleMapService } from './map.service';
 import { ViewCoordinationService } from './view-coordination.service';
 import { Map, SceneView } from 'esri-mods';
@@ -40,11 +40,14 @@ export class EsriSceneViewComponent {
 
     syncCamera(delaySync:boolean) {
         if (delaySync) {
-            this.view.animateTo(this._viewCoordinationService.camera, {
+            this.view.goTo(this._viewCoordinationService.camera, {
+                animate: true,
                 delay: 700
             });
         } else {
-            this.view.camera = this._viewCoordinationService.camera;
+            this.view.goTo(this._viewCoordinationService.camera, {
+                animate: false
+            });
         }
     }
 }

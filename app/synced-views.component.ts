@@ -1,4 +1,4 @@
-import { Component, ViewChildren } from 'angular2/core';
+import { Component, ViewChildren } from '@angular/core';
 import { EsriSceneViewComponent } from './esri-scene-view.component';
 import { ViewCoordinationService } from './view-coordination.service';
 import { BrowserDetectionService } from './browser-detection.service';
