@@ -1,5 +1,5 @@
-import { Component } from 'angular2/core';
-import { RouteConfig, ROUTER_DIRECTIVES } from 'angular2/router';
+import { Component } from '@angular/core';
+import { RouteConfig, ROUTER_DIRECTIVES, ROUTER_PROVIDERS } from '@angular/router-deprecated';
 
 import { IntroComponent } from './intro.component';
 import { SyncedViewsComponent } from './synced-views.component';
@@ -58,6 +58,7 @@ import { GeometryEngineShowcaseComponent } from './geometry-engine-showcase.comp
             </section>
         </main>
         `,
-    directives: [ROUTER_DIRECTIVES]
+    directives: [ROUTER_DIRECTIVES],
+    providers: [ROUTER_PROVIDERS]
 })
 export class AppComponent { }
