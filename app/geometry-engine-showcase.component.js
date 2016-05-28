@@ -1,4 +1,4 @@
-System.register(['angular2/core', 'angular2/common', 'rxjs/add/operator/debounceTime', 'rxjs/add/operator/distinctUntilChanged', './esri-map-view.component', 'esri-mods'], function(exports_1, context_1) {
+System.register(['@angular/core', '@angular/common', 'rxjs/add/operator/debounceTime', 'rxjs/add/operator/distinctUntilChanged', './esri-map-view.component', 'esri-mods'], function(exports_1, context_1) {
     "use strict";
     var __moduleName = context_1 && context_1.id;
     var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
@@ -42,44 +42,54 @@ System.register(['angular2/core', 'angular2/common', 'rxjs/add/operator/debounce
                     // when use moves slider
                     // 1) live update UI
                     this.bufferDistanceControl.valueChanges
-                        .subscribe(function (n) {
-                        _this.bufferDistanceDisplay = n;
-                    });
+                        .subscribe(function (n) { return _this.bufferDistanceDisplay = n; });
                     // 2) start analysis after user is done sliding
                     this.bufferDistanceControl.valueChanges
-                        .debounceTime(300)
+                        .debounceTime(250)
                         .distinctUntilChanged()
                         .subscribe(function (n) { return _this.startAnalysis(n); });
                 };
                 GeometryEngineShowcaseComponent.prototype.setView = function (viewRef) {
+                    var _this = this;
                     this.viewReference = viewRef;
-                    this.volcanoesLayer = this.viewReference.map.getLayer('volcanoesLayer');
-                    this.volcanoesLayerView = this.viewReference.getLayerView(this.volcanoesLayer); // this is used to access graphics array
-                    this.analysisLayer = this.viewReference.map.getLayer('analysisLayer');
+                    // inspect layers in the map to create layer or layerView references
+                    this.viewReference.map.layers.forEach(function (layer) {
+                        // here we need a layerView reference
+                        if (layer.id === 'volcanoesLayer') {
+                            _this.viewReference.whenLayerView(layer).then(function (layerView) {
+                                layerView.watch('updating', function (val) {
+                                    if (!val) {
+                                        layerView.queryFeatures().then(function (featureSet) {
+                                            _this.volcanoGeoms = featureSet.map(function (feature) { return feature.geometry; }); // prints the array of client-side graphics to the console
+                                        });
+                                    }
+                                });
+                            });
+                        }
+                        // here we just need a layer reference
+                        if (layer.id === 'analysisLayer') {
+                            _this.analysisLayer = layer;
+                        }
+                    });
                 };
                 GeometryEngineShowcaseComponent.prototype.startAnalysis = function (bufferDistance) {
                     var _this = this;
-                    if (!this.volcanoesLayerView) {
-                        // just in case this wasn't ready or available in setView method
-                        this.volcanoesLayerView = this.viewReference.getLayerView(this.volcanoesLayer);
-                    }
                     // STEP 0.A
                     // filter to get point geometries within the current view extent
-                    var geoms = this.volcanoesLayerView.graphics.map(function (g) { return g.geometry; });
-                    var geomsInExtent = geoms.filter(function (geom) { return _this.viewReference.extent.contains(geom); });
+                    var geomsInExtent = this.volcanoGeoms.filter(function (geom) { return _this.viewReference.extent.contains(geom); });
                     // STEP 0.B
                     // update template bindings
                     // this.bufferDistanceDisplay = bufferDistance;
                     this.featureCount = geomsInExtent.length;
                     // STEP 1
                     // calculate the geodesic buffer geometry with unioned outputs
-                    esri_mods_1.geometryEngineAsync.geodesicBuffer(geomsInExtent.items, bufferDistance, 'kilometers', true).then(function (bufferGeometries) {
+                    esri_mods_1.geometryEngineAsync.geodesicBuffer(geomsInExtent, bufferDistance, 'kilometers', true).then(function (bufferGeometries) {
                         var bufferGeometry = bufferGeometries[0];
                         // STEP 1.A
                         // calculate area and update template binding
                         esri_mods_1.geometryEngineAsync.geodesicArea(bufferGeometry, 'square-kilometers').then(function (res) {
-                            this.bufferPolygonSize = res;
-                        }.bind(this));
+                            _this.bufferPolygonSize = res;
+                        });
                         // STEP 1.B
                         // create a graphic to display the new unioned buffer geometry
                         var bufferGraphic = new esri_mods_1.Graphic({
@@ -98,8 +108,8 @@ System.register(['angular2/core', 'angular2/common', 'rxjs/add/operator/debounce
                             // STEP 2.A
                             // calculate area and update template binding
                             esri_mods_1.geometryEngineAsync.geodesicArea(convexHullGeometry, 'square-kilometers').then(function (res) {
-                                this.convexHullPolygonSize = res;
-                            }.bind(this));
+                                _this.convexHullPolygonSize = res;
+                            });
                             // STEP 2.B
                             // create a graphic to display the new convex hull geometry
                             var convexHullGraphic = new esri_mods_1.Graphic({
@@ -114,17 +124,17 @@ System.register(['angular2/core', 'angular2/common', 'rxjs/add/operator/debounce
                             });
                             // STEP 3
                             // add both the buffer and convex hull graphics to the map
-                            this.addAnalysisResultsToMap(bufferGraphic, convexHullGraphic);
-                        }.bind(this));
-                    }.bind(this));
+                            _this.addAnalysisResultsToMap(bufferGraphic, convexHullGraphic);
+                        });
+                    });
                 };
                 GeometryEngineShowcaseComponent.prototype.addAnalysisResultsToMap = function () {
                     var analysisGraphics = [];
                     for (var _i = 0; _i < arguments.length; _i++) {
                         analysisGraphics[_i - 0] = arguments[_i];
                     }
-                    this.analysisLayer.clear();
-                    this.analysisLayer.add(analysisGraphics);
+                    this.analysisLayer.removeAll();
+                    this.analysisLayer.addMany(analysisGraphics);
                 };
                 GeometryEngineShowcaseComponent = __decorate([
                     core_1.Component({

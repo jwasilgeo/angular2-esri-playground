@@ -1,4 +1,4 @@
-System.register(['angular2/core'], function(exports_1, context_1) {
+System.register(['@angular/core'], function(exports_1, context_1) {
     "use strict";
     var __moduleName = context_1 && context_1.id;
     var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
@@ -24,7 +24,7 @@ System.register(['angular2/core'], function(exports_1, context_1) {
                 IntroComponent = __decorate([
                     core_1.Component({
                         selector: 'intro',
-                        template: "\n        <div>\n            Features\n            <ul>\n                <li><a href=\"https://developers.arcgis.com/javascript/beta/\">Esri 4.x JSAPI</a> for 2D and 3D mapping</li>\n                <li><a href=\"https://github.com/Esri/esri-system-js\">esri-system-js</a> for loading Esri modules in SystemJS</li>\n                <li>Angular 2 app with routing\n                    <ul>\n                        <li>MapView and SceneView components</li>\n                        <li>Custom view coordination service to keep SceneView components in sync</li>\n                        <li>Vector GIS analysis in the browser</li>\n                    </ul>\n                </li>\n                <li>and <a href=\"http://picnicss.com/\">Picnic CSS</a> for the good looks</li>\n            </ul>\n        </div>\n        ",
+                        template: "\n        <div>\n            Features\n            <ul>\n                <li><a href=\"https://js.arcgis.com/\">Esri 4.x JSAPI</a> for 2D and 3D mapping</li>\n                <li><a href=\"https://github.com/Esri/esri-system-js\">esri-system-js</a> for loading Esri modules in SystemJS</li>\n                <li>Angular 2 app with routing\n                    <ul>\n                        <li>MapView and SceneView components</li>\n                        <li>Custom view coordination service to keep SceneView components in sync</li>\n                        <li>Vector GIS analysis in the browser</li>\n                    </ul>\n                </li>\n                <li>and <a href=\"http://picnicss.com/\">Picnic CSS</a> for the good looks</li>\n            </ul>\n        </div>\n        ",
                     }), 
                     __metadata('design:paramtypes', [])
                 ], IntroComponent);

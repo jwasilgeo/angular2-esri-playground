@@ -1,4 +1,4 @@
-System.register(['angular2/core', 'angular2/router', './intro.component', './synced-views.component', './geometry-engine-showcase.component'], function(exports_1, context_1) {
+System.register(['@angular/core', '@angular/router-deprecated', './intro.component', './synced-views.component', './geometry-engine-showcase.component'], function(exports_1, context_1) {
     "use strict";
     var __moduleName = context_1 && context_1.id;
     var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
@@ -10,15 +10,15 @@ System.register(['angular2/core', 'angular2/router', './intro.component', './syn
     var __metadata = (this && this.__metadata) || function (k, v) {
         if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
     };
-    var core_1, router_1, intro_component_1, synced_views_component_1, geometry_engine_showcase_component_1;
+    var core_1, router_deprecated_1, intro_component_1, synced_views_component_1, geometry_engine_showcase_component_1;
     var AppComponent;
     return {
         setters:[
             function (core_1_1) {
                 core_1 = core_1_1;
             },
-            function (router_1_1) {
-                router_1 = router_1_1;
+            function (router_deprecated_1_1) {
+                router_deprecated_1 = router_deprecated_1_1;
             },
             function (intro_component_1_1) {
                 intro_component_1 = intro_component_1_1;
@@ -34,7 +34,7 @@ System.register(['angular2/core', 'angular2/router', './intro.component', './syn
                 function AppComponent() {
                 }
                 AppComponent = __decorate([
-                    router_1.RouteConfig([
+                    router_deprecated_1.RouteConfig([
                         {
                             path: '/intro',
                             name: 'Intro',
@@ -56,8 +56,8 @@ System.register(['angular2/core', 'angular2/router', './intro.component', './syn
                         selector: 'playground-app',
                         styles: ["\n        section {\n            width: 90%;\n            max-width: 1200px;\n            margin: 0 auto;\n            padding: 4em 0 0 0;\n        }\n        "],
                         template: "\n        <nav>\n            <a href=\"#\" class=\"brand\">\n                <span>Angular 2 + Esri 4</span>\n            </a>\n\n            <!-- responsive-->\n            <input id=\"bmenub\" type=\"checkbox\" class=\"show\">\n            <label for=\"bmenub\" class=\"burger pseudo button\">\u2261</label>\n\n            <div class=\"menu\">\n                <a class=\"pseudo button\" [routerLink]=\"['Intro']\">Intro</a>\n                <a class=\"button\" [routerLink]=\"['SyncedViews']\">Synced 3D Views</a>\n                <a class=\"button\" [routerLink]=\"['GeometryEngineShowcase']\">Geometry Engine</a>\n\n                <a class=\"pseudo button\" href=\"https://github.com/jwasilgeo/angular2-esri-playground\">Github</a>\n                <a class=\"pseudo button\" href=\"https://twitter.com/JWasilGeo\">@JWasilGeo</a>\n            </div>\n        </nav>\n        <main>\n            <section>\n                <router-outlet></router-outlet>\n            </section>\n        </main>\n        ",
-                        directives: [router_1.ROUTER_DIRECTIVES],
-                        providers: [router_1.ROUTER_PROVIDERS]
+                        directives: [router_deprecated_1.ROUTER_DIRECTIVES],
+                        providers: [router_deprecated_1.ROUTER_PROVIDERS]
                     }), 
                     __metadata('design:paramtypes', [])
                 ], AppComponent);

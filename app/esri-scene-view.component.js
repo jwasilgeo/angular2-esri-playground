@@ -1,4 +1,4 @@
-System.register(['angular2/core', './map.service', './view-coordination.service', 'esri-mods'], function(exports_1, context_1) {
+System.register(['@angular/core', './map.service', './view-coordination.service', 'esri-mods'], function(exports_1, context_1) {
     "use strict";
     var __moduleName = context_1 && context_1.id;
     var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
@@ -52,12 +52,15 @@ System.register(['angular2/core', './map.service', './view-coordination.service'
                 };
                 EsriSceneViewComponent.prototype.syncCamera = function (delaySync) {
                     if (delaySync) {
-                        this.view.animateTo(this._viewCoordinationService.camera, {
+                        this.view.goTo(this._viewCoordinationService.camera, {
+                            animate: true,
                             delay: 700
                         });
                     }
                     else {
-                        this.view.camera = this._viewCoordinationService.camera;
+                        this.view.goTo(this._viewCoordinationService.camera, {
+                            animate: false
+                        });
                     }
                 };
                 __decorate([
