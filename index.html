@@ -2,45 +2,39 @@
 <html>
     <head>
         <base href="/angular2-esri-playground/">
+        <meta charset="utf-8">
+        <meta name="viewport" content="initial-scale=1,maximum-scale=1,user-scalable=no">
         <title>Angular 2 + Esri 4 Playground</title>
-        <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no">
 
-        <!-- load Angular2 libraries -->
-        <script src="//cdnjs.cloudflare.com/ajax/libs/es6-shim/0.33.3/es6-shim.min.js"></script>
-        <script src="//cdnjs.cloudflare.com/ajax/libs/systemjs/0.19.16/system-polyfills.js"></script>
-        <script src="//code.angularjs.org/tools/system.js"></script>
-        <script src="//code.angularjs.org/tools/typescript.js"></script>
-        <script src="//code.angularjs.org/2.0.0-beta.7/angular2-polyfills.js"></script>
-        <script src="//code.angularjs.org/2.0.0-beta.7/Rx.js"></script>
-        <script src="//code.angularjs.org/2.0.0-beta.7/angular2.dev.js"></script>
-        <script src="//code.angularjs.org/2.0.0-beta.7/router.dev.js"></script>
+        <!-- load libraries -->
+        <script src="//npmcdn.com/core-js/client/shim.min.js"></script>
+        <script src="//npmcdn.com/zone.js@0.6.12?main=browser"></script>
+        <script src="//npmcdn.com/reflect-metadata@0.1.3"></script>
+        <script src="//npmcdn.com/systemjs@0.19.27/dist/system.src.js"></script>
 
         <!-- load Picnic CSS library -->
         <link rel="stylesheet" href="//cdn.jsdelivr.net/picnicss/5.1.0/picnic.min.css">
         <link rel="stylesheet" href="//cdn.jsdelivr.net/picnicss/5.1.0/plugins.min.css">
         
         <!-- load Esri library -->
-        <link rel="stylesheet" href="//js.arcgis.com/4.0beta3/esri/css/main.css">
-        <script src="//js.arcgis.com/4.0beta3/"></script>
+        <link rel="stylesheet" href="//js.arcgis.com/4.0/esri/css/main.css">
+        <script src="//js.arcgis.com/4.0/"></script>
 
         <!-- load esri-system-js library -->
-        <script src="//npmcdn.com/esri-system-js@0.0.2/dist/esriSystem.js"></script>
+        <script src="node_modules/esri-system-js/dist/esriSystem.js"></script>
+        
+        <!-- configure SystemJS -->
+        <script src="systemjs.config.js"></script>
 
-        <style type="text/css">
-            .esri-icon-plus, .esri-icon-minus {
-                line-height: inherit;
-            }
-            .esri-view {
-                height: 500px;
-            }
-        </style>
+        <!-- load this app's styles -->
+        <link rel="stylesheet" href="styles.css">
     </head>
     
     <!-- display the application -->
     <body>
         <playground-app>Loading...</playground-app>
 
-        <!-- using esri-system-js: configure SystemJS, load Esri modules, and bootstrap the app -->
+        <!-- using esri-system-js: load Esri modules and then bootstrap the app -->
         <script src="app/load.js"></script>
     </body>
 </html>
