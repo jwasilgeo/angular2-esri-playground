@@ -1,6 +1,7 @@
 import { Component, ElementRef, Input, Output, EventEmitter } from '@angular/core';
 import { AnalysisMapService } from './map.service';
-import { Map, MapView } from 'esri-mods';
+import Map from 'esri/Map';
+import MapView from 'esri/views/MapView';
 
 @Component({
     selector: 'esri-map-view',

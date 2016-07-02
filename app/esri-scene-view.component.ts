@@ -1,7 +1,9 @@
 import { Component, ElementRef, Output, EventEmitter } from '@angular/core';
 import { SimpleMapService } from './map.service';
 import { ViewCoordinationService } from './view-coordination.service';
-import { Map, SceneView } from 'esri-mods';
+import Map from 'esri/Map';
+import SceneView from 'esri/views/SceneView';
+
 
 @Component({
     selector: 'esri-scene-view',
