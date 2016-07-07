@@ -1,4 +1,4 @@
-System.register(['@angular/core', 'esri-mods'], function(exports_1, context_1) {
+System.register(['@angular/core', 'esri/Map', 'esri/layers/FeatureLayer', 'esri/layers/GraphicsLayer'], function(exports_1, context_1) {
     "use strict";
     var __moduleName = context_1 && context_1.id;
     var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
@@ -10,21 +10,27 @@ System.register(['@angular/core', 'esri-mods'], function(exports_1, context_1) {
     var __metadata = (this && this.__metadata) || function (k, v) {
         if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
     };
-    var core_1, esri_mods_1;
+    var core_1, Map_1, FeatureLayer_1, GraphicsLayer_1;
     var SimpleMapService, AnalysisMapService;
     return {
         setters:[
             function (core_1_1) {
                 core_1 = core_1_1;
             },
-            function (esri_mods_1_1) {
-                esri_mods_1 = esri_mods_1_1;
+            function (Map_1_1) {
+                Map_1 = Map_1_1;
+            },
+            function (FeatureLayer_1_1) {
+                FeatureLayer_1 = FeatureLayer_1_1;
+            },
+            function (GraphicsLayer_1_1) {
+                GraphicsLayer_1 = GraphicsLayer_1_1;
             }],
         execute: function() {
             SimpleMapService = (function () {
                 function SimpleMapService() {
                     this.map = null;
-                    this.map = new esri_mods_1.Map({
+                    this.map = new Map_1.default({
                         basemap: 'satellite'
                     });
                 }
@@ -38,13 +44,13 @@ System.register(['@angular/core', 'esri-mods'], function(exports_1, context_1) {
             AnalysisMapService = (function () {
                 function AnalysisMapService() {
                     this.map = null;
-                    this.map = new esri_mods_1.Map({
+                    this.map = new Map_1.default({
                         basemap: 'satellite',
                         layers: [
-                            new esri_mods_1.GraphicsLayer({
+                            new GraphicsLayer_1.default({
                                 id: 'analysisLayer'
                             }),
-                            new esri_mods_1.FeatureLayer({
+                            new FeatureLayer_1.default({
                                 url: '//services.arcgis.com/BG6nSlhZSAWtExvp/arcgis/rest/services/World_Volcanoes/FeatureServer/0',
                                 id: 'volcanoesLayer'
                             })

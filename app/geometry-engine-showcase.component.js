@@ -1,4 +1,4 @@
-System.register(['@angular/core', '@angular/common', 'rxjs/add/operator/debounceTime', 'rxjs/add/operator/distinctUntilChanged', './esri-map-view.component', 'esri-mods'], function(exports_1, context_1) {
+System.register(['@angular/core', '@angular/common', 'rxjs/add/operator/debounceTime', 'rxjs/add/operator/distinctUntilChanged', './esri-map-view.component', 'esri/geometry/geometryEngineAsync', 'esri/Graphic', 'esri/symbols/SimpleFillSymbol', 'esri/symbols/SimpleLineSymbol'], function(exports_1, context_1) {
     "use strict";
     var __moduleName = context_1 && context_1.id;
     var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
@@ -10,7 +10,7 @@ System.register(['@angular/core', '@angular/common', 'rxjs/add/operator/debounce
     var __metadata = (this && this.__metadata) || function (k, v) {
         if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
     };
-    var core_1, common_1, esri_map_view_component_1, esri_mods_1;
+    var core_1, common_1, esri_map_view_component_1, geometryEngineAsync_1, Graphic_1, SimpleFillSymbol_1, SimpleLineSymbol_1;
     var GeometryEngineShowcaseComponent;
     return {
         setters:[
@@ -25,8 +25,17 @@ System.register(['@angular/core', '@angular/common', 'rxjs/add/operator/debounce
             function (esri_map_view_component_1_1) {
                 esri_map_view_component_1 = esri_map_view_component_1_1;
             },
-            function (esri_mods_1_1) {
-                esri_mods_1 = esri_mods_1_1;
+            function (geometryEngineAsync_1_1) {
+                geometryEngineAsync_1 = geometryEngineAsync_1_1;
+            },
+            function (Graphic_1_1) {
+                Graphic_1 = Graphic_1_1;
+            },
+            function (SimpleFillSymbol_1_1) {
+                SimpleFillSymbol_1 = SimpleFillSymbol_1_1;
+            },
+            function (SimpleLineSymbol_1_1) {
+                SimpleLineSymbol_1 = SimpleLineSymbol_1_1;
             }],
         execute: function() {
             GeometryEngineShowcaseComponent = (function () {
@@ -83,20 +92,20 @@ System.register(['@angular/core', '@angular/common', 'rxjs/add/operator/debounce
                     this.featureCount = geomsInExtent.length;
                     // STEP 1
                     // calculate the geodesic buffer geometry with unioned outputs
-                    esri_mods_1.geometryEngineAsync.geodesicBuffer(geomsInExtent, bufferDistance, 'kilometers', true).then(function (bufferGeometries) {
+                    geometryEngineAsync_1.default.geodesicBuffer(geomsInExtent, bufferDistance, 'kilometers', true).then(function (bufferGeometries) {
                         var bufferGeometry = bufferGeometries[0];
                         // STEP 1.A
                         // calculate area and update template binding
-                        esri_mods_1.geometryEngineAsync.geodesicArea(bufferGeometry, 'square-kilometers').then(function (res) {
+                        geometryEngineAsync_1.default.geodesicArea(bufferGeometry, 'square-kilometers').then(function (res) {
                             _this.bufferPolygonSize = res;
                         });
                         // STEP 1.B
                         // create a graphic to display the new unioned buffer geometry
-                        var bufferGraphic = new esri_mods_1.Graphic({
+                        var bufferGraphic = new Graphic_1.default({
                             geometry: bufferGeometry,
-                            symbol: new esri_mods_1.SimpleFillSymbol({
+                            symbol: new SimpleFillSymbol_1.default({
                                 color: [227, 139, 79, 0.7],
-                                outline: new esri_mods_1.SimpleLineSymbol({
+                                outline: new SimpleLineSymbol_1.default({
                                     color: [255, 255, 255],
                                     width: 1
                                 })
@@ -104,19 +113,19 @@ System.register(['@angular/core', '@angular/common', 'rxjs/add/operator/debounce
                         });
                         // STEP 2
                         // calculate the convex hull geometry
-                        esri_mods_1.geometryEngineAsync.convexHull(bufferGeometry, true).then(function (convexHullGeometry) {
+                        geometryEngineAsync_1.default.convexHull(bufferGeometry, true).then(function (convexHullGeometry) {
                             // STEP 2.A
                             // calculate area and update template binding
-                            esri_mods_1.geometryEngineAsync.geodesicArea(convexHullGeometry, 'square-kilometers').then(function (res) {
+                            geometryEngineAsync_1.default.geodesicArea(convexHullGeometry, 'square-kilometers').then(function (res) {
                                 _this.convexHullPolygonSize = res;
                             });
                             // STEP 2.B
                             // create a graphic to display the new convex hull geometry
-                            var convexHullGraphic = new esri_mods_1.Graphic({
+                            var convexHullGraphic = new Graphic_1.default({
                                 geometry: convexHullGeometry,
-                                symbol: new esri_mods_1.SimpleFillSymbol({
+                                symbol: new SimpleFillSymbol_1.default({
                                     color: [255, 255, 255, 0],
-                                    outline: new esri_mods_1.SimpleLineSymbol({
+                                    outline: new SimpleLineSymbol_1.default({
                                         color: [255, 255, 255],
                                         width: 2
                                     })

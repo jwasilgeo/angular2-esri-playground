@@ -1,5 +1,4 @@
 // load Esri modules with the help of esri-system-js library
-// into a System.js module called esri-mods
 esriSystem.register([
     'esri/geometry/Point',
     'esri/geometry/geometryEngineAsync',
@@ -16,7 +15,5 @@ esriSystem.register([
     // System.import('app/main')
     System.import('app')
         .then(null, console.error.bind(console));
-}, {
-    outModuleName: 'esri-mods'
 });
 //# sourceMappingURL=load.js.map

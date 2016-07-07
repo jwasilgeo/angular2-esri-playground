@@ -1,4 +1,4 @@
-System.register(['@angular/core', './map.service', './view-coordination.service', 'esri-mods'], function(exports_1, context_1) {
+System.register(['@angular/core', './map.service', './view-coordination.service', 'esri/views/SceneView'], function(exports_1, context_1) {
     "use strict";
     var __moduleName = context_1 && context_1.id;
     var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
@@ -10,7 +10,7 @@ System.register(['@angular/core', './map.service', './view-coordination.service'
     var __metadata = (this && this.__metadata) || function (k, v) {
         if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
     };
-    var core_1, map_service_1, view_coordination_service_1, esri_mods_1;
+    var core_1, map_service_1, view_coordination_service_1, SceneView_1;
     var EsriSceneViewComponent;
     return {
         setters:[
@@ -23,8 +23,8 @@ System.register(['@angular/core', './map.service', './view-coordination.service'
             function (view_coordination_service_1_1) {
                 view_coordination_service_1 = view_coordination_service_1_1;
             },
-            function (esri_mods_1_1) {
-                esri_mods_1 = esri_mods_1_1;
+            function (SceneView_1_1) {
+                SceneView_1 = SceneView_1_1;
             }],
         execute: function() {
             EsriSceneViewComponent = (function () {
@@ -36,7 +36,7 @@ System.register(['@angular/core', './map.service', './view-coordination.service'
                     this.view = null;
                 }
                 EsriSceneViewComponent.prototype.ngOnInit = function () {
-                    this.view = new esri_mods_1.SceneView({
+                    this.view = new SceneView_1.default({
                         container: this.elRef.nativeElement.firstChild,
                         map: this._mapService.map,
                         zoom: this._viewCoordinationService.zoom,
@@ -51,11 +51,13 @@ System.register(['@angular/core', './map.service', './view-coordination.service'
                     }.bind(this));
                 };
                 EsriSceneViewComponent.prototype.syncCamera = function (delaySync) {
+                    var _this = this;
                     if (delaySync) {
-                        this.view.goTo(this._viewCoordinationService.camera, {
-                            animate: true,
-                            delay: 700
-                        });
+                        setTimeout(function () {
+                            _this.view.goTo(_this._viewCoordinationService.camera, {
+                                animate: true
+                            });
+                        }, 1000);
                     }
                     else {
                         this.view.goTo(this._viewCoordinationService.camera, {

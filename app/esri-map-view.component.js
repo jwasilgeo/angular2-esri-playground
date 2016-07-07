@@ -1,4 +1,4 @@
-System.register(['@angular/core', './map.service', 'esri-mods'], function(exports_1, context_1) {
+System.register(['@angular/core', './map.service', 'esri/views/MapView'], function(exports_1, context_1) {
     "use strict";
     var __moduleName = context_1 && context_1.id;
     var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
@@ -10,7 +10,7 @@ System.register(['@angular/core', './map.service', 'esri-mods'], function(export
     var __metadata = (this && this.__metadata) || function (k, v) {
         if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
     };
-    var core_1, map_service_1, esri_mods_1;
+    var core_1, map_service_1, MapView_1;
     var EsriMapViewComponent;
     return {
         setters:[
@@ -20,8 +20,8 @@ System.register(['@angular/core', './map.service', 'esri-mods'], function(export
             function (map_service_1_1) {
                 map_service_1 = map_service_1_1;
             },
-            function (esri_mods_1_1) {
-                esri_mods_1 = esri_mods_1_1;
+            function (MapView_1_1) {
+                MapView_1 = MapView_1_1;
             }],
         execute: function() {
             EsriMapViewComponent = (function () {
@@ -32,7 +32,7 @@ System.register(['@angular/core', './map.service', 'esri-mods'], function(export
                     this.view = null;
                 }
                 EsriMapViewComponent.prototype.ngOnInit = function () {
-                    this.view = new esri_mods_1.MapView({
+                    this.view = new MapView_1.default({
                         container: this.elRef.nativeElement.firstChild,
                         map: this._mapService.map,
                         zoom: this.zoom,
