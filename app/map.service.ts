@@ -1,5 +1,7 @@
 import { Injectable } from '@angular/core';
-import { Map, FeatureLayer, GraphicsLayer } from 'esri-mods';
+import Map from 'esri/Map';
+import FeatureLayer from 'esri/layers/FeatureLayer';
+import GraphicsLayer from 'esri/layers/GraphicsLayer';
 
 @Injectable()
 export class SimpleMapService {

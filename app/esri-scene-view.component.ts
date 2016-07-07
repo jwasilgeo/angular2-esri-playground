@@ -1,7 +1,9 @@
 import { Component, ElementRef, Output, EventEmitter } from '@angular/core';
 import { SimpleMapService } from './map.service';
 import { ViewCoordinationService } from './view-coordination.service';
-import { Map, SceneView } from 'esri-mods';
+import Map from 'esri/Map';
+import SceneView from 'esri/views/SceneView';
+
 
 @Component({
     selector: 'esri-scene-view',
@@ -35,15 +37,15 @@ export class EsriSceneViewComponent {
         this.view.watch('camera', function(newVal, oldVal, propertyName) {
             this._viewCoordinationService.setValue(newVal, propertyName);
         }.bind(this));
-
     }
 
     syncCamera(delaySync:boolean) {
         if (delaySync) {
-            this.view.goTo(this._viewCoordinationService.camera, {
-                animate: true,
-                delay: 700
-            });
+            setTimeout(() => {
+                this.view.goTo(this._viewCoordinationService.camera, {
+                    animate: true
+                });
+            }, 1000);
         } else {
             this.view.goTo(this._viewCoordinationService.camera, {
                 animate: false
