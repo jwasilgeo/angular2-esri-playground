@@ -7,7 +7,10 @@ import 'rxjs/add/operator/debounceTime';
 import 'rxjs/add/operator/distinctUntilChanged';
 
 import { EsriMapViewComponent } from './esri-map-view.component';
-import { geometryEngineAsync, Graphic, SimpleFillSymbol, SimpleLineSymbol } from 'esri-mods';
+import geometryEngineAsync from 'esri/geometry/geometryEngineAsync';
+import Graphic from 'esri/Graphic';
+import SimpleFillSymbol from  'esri/symbols/SimpleFillSymbol';
+import SimpleLineSymbol from 'esri/symbols/SimpleLineSymbol';
 
 @Component({
     selector: 'geometry-engine-showcase',

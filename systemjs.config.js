@@ -13,9 +13,6 @@
         },
         'rxjs': {
             defaultExtension: 'js'
-        },
-        'esri-mods': {
-            defaultExtension: 'js'
         }
     };
     var ngPackageNames = [
