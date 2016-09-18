@@ -1,14 +1,57 @@
-import { bootstrap } from '@angular/platform-browser-dynamic';
-import { ROUTER_PROVIDERS } from '@angular/router';
-// Add these symbols to override the `LocationStrategy`
-import { provide } from '@angular/core';
-import { LocationStrategy, HashLocationStrategy } from '@angular/common';
+import { NgModule } from '@angular/core';
+import { BrowserModule } from '@angular/platform-browser';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
+import { Routes, RouterModule } from '@angular/router';
 
-import { AppComponent } from './app.component';
+import { AppComponent }  from './app.component';
 
-bootstrap(AppComponent, [
-  ROUTER_PROVIDERS,
-  provide(LocationStrategy, {
-      useClass: HashLocationStrategy
-  })
-]);
+import { IntroComponent } from './intro.component';
+
+import { SyncedViewsComponent } from './synced-views.component';
+import { EsriSceneViewComponent } from './esri-scene-view.component';
+
+import { GeometryEngineShowcaseComponent } from './geometry-engine-showcase.component';
+import { EsriMapViewComponent } from './esri-map-view.component';
+
+
+const routes: Routes = [
+    {
+        path: '',
+        redirectTo: '/intro',
+        pathMatch: 'full'
+    }, {
+        path: 'intro',
+        component: IntroComponent
+    }, {
+        path: 'synced-views',
+        component: SyncedViewsComponent
+    }, {
+        path: 'geom-engine-showcase',
+        component: GeometryEngineShowcaseComponent
+    }
+];
+
+@NgModule({
+    imports: [
+        BrowserModule,
+        ReactiveFormsModule,
+        RouterModule.forRoot(routes, { useHash: true })
+    ],
+    declarations: [
+        AppComponent,
+
+        IntroComponent,
+
+        SyncedViewsComponent,
+        EsriSceneViewComponent,
+
+        GeometryEngineShowcaseComponent,
+        EsriMapViewComponent
+    ],
+    // providers: [],
+    bootstrap: [ AppComponent ]
+})
+export class AppModule { }
+
+platformBrowserDynamic().bootstrapModule(AppModule);

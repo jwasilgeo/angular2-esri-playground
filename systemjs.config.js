@@ -16,20 +16,19 @@
         }
     };
     var ngPackageNames = [
+        'core',
         'common',
         'compiler',
-        'core',
+        'forms',
         'http',
         'platform-browser',
         'platform-browser-dynamic',
-        'router',
-        'router-deprecated',
-        'upgrade',
+        'router'
     ];
     // Add package entries for angular packages
-    ngPackageNames.forEach(function(pkgName) {
-        packages['@angular/' + pkgName] = {
-            main: pkgName + '.umd.js',
+    ngPackageNames.forEach(function(packageName) {
+        packages['@angular/' + packageName] = {
+            main: 'bundles/' + packageName + '.umd.js',
             defaultExtension: 'js'
         };
     });
