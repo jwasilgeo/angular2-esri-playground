@@ -1,5 +1,4 @@
 (function(global) {
-    var ngVersion = '@2.0.0'; // establish the angular version
     // map tells the System loader where to look for things
     var map = {
         'app': 'app',
@@ -17,18 +16,18 @@
         }
     };
     var ngPackageNames = [
-        'core',
-        'common',
-        'compiler',
-        'forms',
-        'http',
-        'platform-browser',
-        'platform-browser-dynamic',
-        'router'
+        'core@2.0.0',
+        'common@2.0.0',
+        'compiler@2.0.0',
+        'forms@2.0.0',
+        'http@2.0.0',
+        'platform-browser@2.0.0',
+        'platform-browser-dynamic@2.0.0',
+        'router@3.0.0'
     ];
     // Add map entries for each angular package including the ngVersion
     ngPackageNames.forEach(function(pkgName) {
-        map['@angular/' + pkgName] = 'https://unpkg.com/@angular/' + pkgName + ngVersion;
+        map['@angular/' + pkgName] = 'https://unpkg.com/@angular/' + pkgName;
     });
     // Add package entries for angular packages
     ngPackageNames.forEach(function(packageName) {
