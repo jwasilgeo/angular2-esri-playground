@@ -1,28 +1,5 @@
 import { Component } from '@angular/core';
-import { RouteConfig, ROUTER_DIRECTIVES, ROUTER_PROVIDERS } from '@angular/router-deprecated';
 
-import { IntroComponent } from './intro.component';
-import { SyncedViewsComponent } from './synced-views.component';
-import { GeometryEngineShowcaseComponent } from './geometry-engine-showcase.component';
-
-@RouteConfig([
-    {
-        path: '/intro',
-        name: 'Intro',
-        component: IntroComponent,
-        useAsDefault: true
-    },
-    {
-        path: '/synced-views',
-        name: 'SyncedViews',
-        component: SyncedViewsComponent
-    },
-    {
-        path: '/geom-engine-showcase',
-        name: 'GeometryEngineShowcase',
-        component: GeometryEngineShowcaseComponent
-    }
-])
 @Component({
     selector: 'playground-app',
     styles: [`
@@ -44,9 +21,9 @@ import { GeometryEngineShowcaseComponent } from './geometry-engine-showcase.comp
             <label for="bmenub" class="burger pseudo button">≡</label>
 
             <div class="menu">
-                <a class="pseudo button" [routerLink]="['Intro']">Intro</a>
-                <a class="button" [routerLink]="['SyncedViews']">Synced 3D Views</a>
-                <a class="button" [routerLink]="['GeometryEngineShowcase']">Geometry Engine</a>
+                <a class="pseudo button" [routerLink]="['intro']">Intro</a>
+                <a class="button" [routerLink]="['synced-views']">Synced 3D Views</a>
+                <a class="button" [routerLink]="['geom-engine-showcase']">Geometry Engine</a>
 
                 <a class="pseudo button" href="https://github.com/jwasilgeo/angular2-esri-playground">Github</a>
                 <a class="pseudo button" href="https://twitter.com/JWasilGeo">@JWasilGeo</a>
@@ -57,8 +34,6 @@ import { GeometryEngineShowcaseComponent } from './geometry-engine-showcase.comp
                 <router-outlet></router-outlet>
             </section>
         </main>
-        `,
-    directives: [ROUTER_DIRECTIVES],
-    providers: [ROUTER_PROVIDERS]
+        `
 })
 export class AppComponent { }

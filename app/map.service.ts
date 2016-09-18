@@ -18,7 +18,7 @@ export class AnalysisMapService {
     map: any = null;
     constructor() {
         this.map = new Map({
-            basemap: 'satellite',
+            basemap: 'dark-gray-vector',
             layers: [
                 new GraphicsLayer({
                     id: 'analysisLayer'

@@ -1,8 +1,8 @@
 import { Component, ViewChildren } from '@angular/core';
 
-// Observables and RxJS
-import { Control } from '@angular/common';
-import { Observable } from 'rxjs/Observable';
+// Reactive form controls
+import { FormGroup, FormControl } from '@angular/forms';
+// import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/debounceTime';
 import 'rxjs/add/operator/distinctUntilChanged';
 
@@ -19,7 +19,7 @@ import SimpleLineSymbol from 'esri/symbols/SimpleLineSymbol';
             font-style: italic;
             font-size: 0.8em;
         }
-        .rangeSlider {
+        .range-slider {
             margin: 0 10px;
             max-width: 200px;
             vertical-align: middle;
@@ -27,6 +27,7 @@ import SimpleLineSymbol from 'esri/symbols/SimpleLineSymbol';
         .label-override {
             margin-left: 0;
             margin-right: 1em;
+            font-size: 0.9em;
         }
         .card pre {
             margin: 0 15px 20px 15px;
@@ -38,17 +39,21 @@ import SimpleLineSymbol from 'esri/symbols/SimpleLineSymbol';
         <h4>Vector GIS analysis with Esri's client-side geometry engine</h4>
 
         <esri-map-view #mapView (viewCreated)="setView(mapView.view)"
-            zoom="6" centerLng="-18.5" centerLat="65" rotation="180">
+            zoom="5" centerLng="-18.5" centerLat="65" rotation="180">
         </esri-map-view>
 
         <span class="workflow">Workflow: create geodesic buffer &rarr; create convex hull &rarr; calculate buffer and convex hull areas</span>
 
         <p>Change the buffer distance to begin:</p>
-        <div>
-            <input type="range" min="10" max="300" value="30" step="5"
-                class="rangeSlider"
-                [ngFormControl]="bufferDistanceControl">
-            <span>{{ bufferDistanceDisplay }} km</span>
+
+        <div [formGroup]="gisInputForm">
+            <input type="range"
+                min="10" max="300" step="5"
+                class="range-slider"
+                formControlName="bufferDistance" />
+            <span class="label label-override" [ngClass]="{'success': analysisDone, 'warning': analysisDebouncing, 'error': analysisWorking}">
+                {{ bufferDistanceDisplay }} km
+            </span>
         </div>
 
         <ul>
@@ -61,34 +66,46 @@ import SimpleLineSymbol from 'esri/symbols/SimpleLineSymbol';
             <p><span class="label label-override">Info</span>This Esri map view was created with a custom Angular 2 component with several <code>@Input</code> bindings and an <code>EventEmitter()</code> event binding:</p>
             <pre>
 <code>&lt;esri-map-view #mapView (viewCreated)="setView(mapView.view)"
-    zoom="6" centerLng="-18.5" centerLat="65" rotation="180"&gt;
+    zoom="5" centerLng="-18.5" centerLat="65" rotation="180"&gt;
 &lt;/esri-map-view&gt;</code>
             </pre>
         </div>
-        `,
-    directives: [EsriMapViewComponent]
+        `
 })
 export class GeometryEngineShowcaseComponent {
+    public gisInputForm: FormGroup;
     viewReference: any;
     volcanoGeoms: any;
     analysisLayer: any;
-    featureCount = 0;
-    bufferPolygonSize = 0;
-    convexHullPolygonSize = 0;
-
-    bufferDistanceDisplay = 0;
-    bufferDistanceControl = new Control();
+    featureCount: number = 0;
+    bufferPolygonSize: number = 0;
+    convexHullPolygonSize: number = 0;
+    bufferDistanceDisplay: number = 30;
+    analysisDone: boolean = true;
+    analysisDebouncing: boolean = false;
+    analysisWorking: boolean = false;
 
     ngOnInit() {
+        this.gisInputForm = new FormGroup({
+            bufferDistance: new FormControl(this.bufferDistanceDisplay)
+        });
+
         // when use moves slider
         // 1) live update UI
-        this.bufferDistanceControl.valueChanges
-            .subscribe(n => this.bufferDistanceDisplay = n);
+        this.gisInputForm.controls.bufferDistance
+            .valueChanges
+            .subscribe((n) => {
+                this.bufferDistanceDisplay = n;
+                // update label class bindings
+                this.analysisDone = false;
+                this.analysisDebouncing = true;
+            });
         // 2) start analysis after user is done sliding
-        this.bufferDistanceControl.valueChanges
+        this.gisInputForm.controls.bufferDistance
+            .valueChanges
             .debounceTime(250)
             .distinctUntilChanged()
-            .subscribe(n => this.startAnalysis(n));
+            .subscribe((n) => this.performAnalysis(n));
     }
 
     setView(viewRef) {
@@ -100,9 +117,11 @@ export class GeometryEngineShowcaseComponent {
             if (layer.id === 'volcanoesLayer') {
                 this.viewReference.whenLayerView(layer).then((layerView) => {
                     layerView.watch('updating', (val) => {
-                        if (!val) { // wait for the layer view to finish updating
+                        if (!val) {
+                            // wait for the layer view to finish updating
                             layerView.queryFeatures().then((featureSet) => {
-                                this.volcanoGeoms = featureSet.map(feature => feature.geometry); // prints the array of client-side graphics to the console
+                                // establish initial volcanoGeoms array for use in performAnalysis
+                                this.volcanoGeoms = featureSet.map(feature => feature.geometry);
                             });
                         }
                     });
@@ -115,10 +134,14 @@ export class GeometryEngineShowcaseComponent {
         });
     }
 
-    startAnalysis(bufferDistance) {
+    performAnalysis(bufferDistance) {
+        // update label class bindings
+        this.analysisDebouncing = false;
+        this.analysisWorking = true;
+
         // STEP 0.A
         // filter to get point geometries within the current view extent
-        var geomsInExtent = this.volcanoGeoms.filter(geom => this.viewReference.extent.contains(geom));
+        var geomsInExtent = this.volcanoGeoms.filter((geom) => this.viewReference.extent.contains(geom));
 
         // STEP 0.B
         // update template bindings
@@ -183,5 +206,9 @@ export class GeometryEngineShowcaseComponent {
     addAnalysisResultsToMap(...analysisGraphics) {
         this.analysisLayer.removeAll();
         this.analysisLayer.addMany(analysisGraphics);
+
+        // update label class bindings
+        this.analysisDone = true;     
+        this.analysisWorking = false;
     }
 }

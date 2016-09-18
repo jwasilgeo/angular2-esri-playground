@@ -45,7 +45,7 @@ System.register(['@angular/core', 'esri/Map', 'esri/layers/FeatureLayer', 'esri/
                 function AnalysisMapService() {
                     this.map = null;
                     this.map = new Map_1.default({
-                        basemap: 'satellite',
+                        basemap: 'dark-gray-vector',
                         layers: [
                             new GraphicsLayer_1.default({
                                 id: 'analysisLayer'

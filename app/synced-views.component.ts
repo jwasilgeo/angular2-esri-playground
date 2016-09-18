@@ -45,7 +45,6 @@ import { BrowserDetectionService } from './browser-detection.service';
             </label>
         </div>
         `,
-     directives: [EsriSceneViewComponent],
      providers: [ViewCoordinationService, BrowserDetectionService]
 })
 export class SyncedViewsComponent {
