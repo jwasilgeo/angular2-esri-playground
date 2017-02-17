@@ -57,7 +57,7 @@ System.register(['@angular/core', './map.service', './view-coordination.service'
                             _this.view.goTo(_this._viewCoordinationService.camera, {
                                 animate: true
                             });
-                        }, 1000);
+                        }, 2000);
                     }
                     else {
                         this.view.goTo(this._viewCoordinationService.camera, {

@@ -4,20 +4,32 @@ import { Component } from '@angular/core';
     selector: 'intro',
     template: 
         `
-        <div>
-            Features
-            <ul>
-                <li><a href="https://js.arcgis.com/">Esri 4.x JSAPI</a> for 2D and 3D mapping</li>
-                <li><a href="https://github.com/Esri/esri-system-js">esri-system-js</a> for loading Esri modules in SystemJS</li>
-                <li>Angular 2 app with routing
+        <div class="flex four">
+            <div></div>
+
+            <div class="half">
+            
+                <article class="card">
+                    <header>
+                        <h3>Awesome Features</h3>
+                    </header>
                     <ul>
-                        <li>MapView and SceneView components</li>
-                        <li>Custom view coordination service to keep SceneView components in sync</li>
-                        <li>Vector GIS analysis in the browser with reactive forms</li>
+                        <li><a href="https://js.arcgis.com/">Esri 4.x JSAPI</a> for 2D and 3D mapping</li>
+                        <li><a href="https://github.com/Esri/esri-system-js">esri-system-js</a> for loading Esri modules in SystemJS</li>
+                        <li>Angular 2 app with routing
+                            <ul>
+                                <li>MapView and SceneView components</li>
+                                <li>Custom view coordination service to keep SceneView components in sync</li>
+                                <li>Vector GIS analysis in the browser with reactive forms</li>
+                            </ul>
+                        </li>
+                        <li>and <a href="http://picnicss.com/">Picnic CSS</a> for the looks</li>
                     </ul>
-                </li>
-                <li>and <a href="http://picnicss.com/">Picnic CSS</a> for the good looks</li>
-            </ul>
+                </article>
+
+            </div>
+
+            <div></div>
         </div>
         `,
 })

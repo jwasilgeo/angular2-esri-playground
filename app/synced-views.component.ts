@@ -22,10 +22,12 @@ import { BrowserDetectionService } from './browser-detection.service';
             <label class="pseudo button toggle" for="tab-2" (click)="syncViews()">Scene View 2</label>
             <div class="row">
                 <div>
-                    <esri-scene-view></esri-scene-view>
+                    <esri-scene-view class="stack"></esri-scene-view>
+                    <a class="stack button">Scene View 1</a>
                 </div>
                 <div>
-                    <esri-scene-view></esri-scene-view>
+                    <esri-scene-view class="stack"></esri-scene-view>
+                    <a class="stack button">Scene View 2</a>
                 </div>
             </div>
         </div>

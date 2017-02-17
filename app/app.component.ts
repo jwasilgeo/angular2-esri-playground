@@ -14,7 +14,7 @@ import { Component } from '@angular/core';
         <nav>
             <a href="#" class="brand">
                 <span>Angular 2 + Esri 4</span>
-            </a>
+            </a>            
 
             <!-- responsive-->
             <input id="bmenub" type="checkbox" class="show">
