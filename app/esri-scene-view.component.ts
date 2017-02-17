@@ -45,7 +45,7 @@ export class EsriSceneViewComponent {
                 this.view.goTo(this._viewCoordinationService.camera, {
                     animate: true
                 });
-            }, 1000);
+            }, 2000);
         } else {
             this.view.goTo(this._viewCoordinationService.camera, {
                 animate: false
