@@ -1,27 +1,25 @@
-System.register(['@angular/core', '@angular/forms', 'rxjs/add/operator/debounceTime', 'rxjs/add/operator/distinctUntilChanged', 'esri/geometry/geometryEngineAsync', 'esri/Graphic', 'esri/symbols/SimpleFillSymbol', 'esri/symbols/SimpleLineSymbol'], function(exports_1, context_1) {
+System.register(["@angular/core", "@angular/forms", "rxjs/add/operator/debounceTime", "rxjs/add/operator/distinctUntilChanged", "esri/geometry/geometryEngineAsync", "esri/Graphic", "esri/symbols/SimpleFillSymbol", "esri/symbols/SimpleLineSymbol"], function (exports_1, context_1) {
     "use strict";
-    var __moduleName = context_1 && context_1.id;
     var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
         var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
         if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
         else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
         return c > 3 && r && Object.defineProperty(target, key, r), r;
     };
-    var __metadata = (this && this.__metadata) || function (k, v) {
-        if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
-    };
-    var core_1, forms_1, geometryEngineAsync_1, Graphic_1, SimpleFillSymbol_1, SimpleLineSymbol_1;
-    var GeometryEngineShowcaseComponent;
+    var __moduleName = context_1 && context_1.id;
+    var core_1, forms_1, geometryEngineAsync_1, Graphic_1, SimpleFillSymbol_1, SimpleLineSymbol_1, GeometryEngineShowcaseComponent;
     return {
-        setters:[
+        setters: [
             function (core_1_1) {
                 core_1 = core_1_1;
             },
             function (forms_1_1) {
                 forms_1 = forms_1_1;
             },
-            function (_1) {},
-            function (_2) {},
+            function (_1) {
+            },
+            function (_2) {
+            },
             function (geometryEngineAsync_1_1) {
                 geometryEngineAsync_1 = geometryEngineAsync_1_1;
             },
@@ -33,8 +31,9 @@ System.register(['@angular/core', '@angular/forms', 'rxjs/add/operator/debounceT
             },
             function (SimpleLineSymbol_1_1) {
                 SimpleLineSymbol_1 = SimpleLineSymbol_1_1;
-            }],
-        execute: function() {
+            }
+        ],
+        execute: function () {
             GeometryEngineShowcaseComponent = (function () {
                 function GeometryEngineShowcaseComponent() {
                     this.featureCount = 0;
@@ -154,7 +153,7 @@ System.register(['@angular/core', '@angular/forms', 'rxjs/add/operator/debounceT
                 GeometryEngineShowcaseComponent.prototype.addAnalysisResultsToMap = function () {
                     var analysisGraphics = [];
                     for (var _i = 0; _i < arguments.length; _i++) {
-                        analysisGraphics[_i - 0] = arguments[_i];
+                        analysisGraphics[_i] = arguments[_i];
                     }
                     this.analysisLayer.removeAll();
                     this.analysisLayer.addMany(analysisGraphics);
@@ -162,18 +161,17 @@ System.register(['@angular/core', '@angular/forms', 'rxjs/add/operator/debounceT
                     this.analysisDone = true;
                     this.analysisWorking = false;
                 };
-                GeometryEngineShowcaseComponent = __decorate([
-                    core_1.Component({
-                        selector: 'geometry-engine-showcase',
-                        styles: ["\n        .workflow {\n            font-style: italic;\n            font-size: 0.8em;\n        }\n        .range-slider {\n            margin: 0 10px;\n            max-width: 200px;\n            vertical-align: middle;\n        }\n        .label-override {\n            margin-left: 0;\n            margin-right: 1em;\n            font-size: 0.9em;\n        }\n        .card pre {\n            margin: 0 15px 20px 15px;\n            width: auto;\n        }\n        "],
-                        template: "\n        <h4>Vector GIS analysis with Esri's client-side geometry engine</h4>\n\n        <esri-map-view #mapView (viewCreated)=\"setView(mapView.view)\"\n            zoom=\"5\" centerLng=\"-18.5\" centerLat=\"65\" rotation=\"180\">\n        </esri-map-view>\n\n        <span class=\"workflow\">Workflow: create geodesic buffer &rarr; create convex hull &rarr; calculate buffer and convex hull areas</span>\n\n        <p>Change the buffer distance to begin:</p>\n\n        <div [formGroup]=\"gisInputForm\">\n            <input type=\"range\"\n                min=\"10\" max=\"300\" step=\"5\"\n                class=\"range-slider\"\n                formControlName=\"bufferDistance\" />\n            <span class=\"label label-override\" [ngClass]=\"{'success': analysisDone, 'warning': analysisDebouncing, 'error': analysisWorking}\">\n                {{ bufferDistanceDisplay }} km\n            </span>\n        </div>\n\n        <ul>\n            <li>volcanoes buffered in extent: {{ featureCount }}</li>\n            <li>unioned buffer area: {{ bufferPolygonSize | number:'1.1-1' }} km<sup>2</sup></li>\n            <li>convex hull area: {{ convexHullPolygonSize | number:'1.1-1' }} km<sup>2</sup></li>\n        </ul>\n\n        <div class=\"card\">\n            <p><span class=\"label label-override\">Info</span>This Esri map view was created with a custom Angular 2 component with several <code>@Input</code> bindings and an <code>EventEmitter()</code> event binding:</p>\n            <pre>\n<code>&lt;esri-map-view #mapView (viewCreated)=\"setView(mapView.view)\"\n    zoom=\"5\" centerLng=\"-18.5\" centerLat=\"65\" rotation=\"180\"&gt;\n&lt;/esri-map-view&gt;</code>\n            </pre>\n        </div>\n        "
-                    }), 
-                    __metadata('design:paramtypes', [])
-                ], GeometryEngineShowcaseComponent);
                 return GeometryEngineShowcaseComponent;
             }());
+            GeometryEngineShowcaseComponent = __decorate([
+                core_1.Component({
+                    selector: 'geometry-engine-showcase',
+                    styles: ["\n        .workflow {\n            font-style: italic;\n            font-size: 0.8em;\n        }\n        .range-slider {\n            margin: 0 10px;\n            max-width: 200px;\n            vertical-align: middle;\n        }\n        .label-override {\n            margin-left: 0;\n            margin-right: 1em;\n            font-size: 0.9em;\n        }\n        .card pre {\n            margin: 0 15px 20px 15px;\n            width: auto;\n        }\n        "],
+                    template: "\n        <h4>Vector GIS analysis with Esri's client-side geometry engine</h4>\n\n        <esri-map-view #mapView (viewCreated)=\"setView(mapView.view)\"\n            zoom=\"5\" centerLng=\"-18.5\" centerLat=\"65\" rotation=\"180\">\n        </esri-map-view>\n\n        <span class=\"workflow\">Workflow: create geodesic buffer &rarr; create convex hull &rarr; calculate buffer and convex hull areas</span>\n\n        <p>Change the buffer distance to begin:</p>\n\n        <div [formGroup]=\"gisInputForm\">\n            <input type=\"range\"\n                min=\"10\" max=\"300\" step=\"5\"\n                class=\"range-slider\"\n                formControlName=\"bufferDistance\" />\n            <span class=\"label label-override\" [ngClass]=\"{'success': analysisDone, 'warning': analysisDebouncing, 'error': analysisWorking}\">\n                {{ bufferDistanceDisplay }} km\n            </span>\n        </div>\n\n        <ul>\n            <li>volcanoes buffered in extent: {{ featureCount }}</li>\n            <li>unioned buffer area: {{ bufferPolygonSize | number:'1.1-1' }} km<sup>2</sup></li>\n            <li>convex hull area: {{ convexHullPolygonSize | number:'1.1-1' }} km<sup>2</sup></li>\n        </ul>\n\n        <div class=\"card\">\n            <p><span class=\"label label-override\">Info</span>This Esri map view was created with a custom Angular 2 component with several <code>@Input</code> bindings and an <code>EventEmitter()</code> event binding:</p>\n            <pre>\n<code>&lt;esri-map-view #mapView (viewCreated)=\"setView(mapView.view)\"\n    zoom=\"5\" centerLng=\"-18.5\" centerLat=\"65\" rotation=\"180\"&gt;\n&lt;/esri-map-view&gt;</code>\n            </pre>\n        </div>\n        "
+                })
+            ], GeometryEngineShowcaseComponent);
             exports_1("GeometryEngineShowcaseComponent", GeometryEngineShowcaseComponent);
         }
-    }
+    };
 });
 //# sourceMappingURL=geometry-engine-showcase.component.js.map
