@@ -8,7 +8,8 @@ export class SimpleMapService {
     map: any = null;
     constructor() {
         this.map = new Map({
-            basemap: 'satellite'
+            basemap: 'satellite',
+            ground: 'world-elevation'
         });
     }
 }
@@ -24,7 +25,7 @@ export class AnalysisMapService {
                     id: 'analysisLayer'
                 }),
                 new FeatureLayer({
-                    url: '//services.arcgis.com/BG6nSlhZSAWtExvp/arcgis/rest/services/World_Volcanoes/FeatureServer/0',
+                    url: 'https://services.arcgis.com/BG6nSlhZSAWtExvp/arcgis/rest/services/World_Volcanoes/FeatureServer/0',
                     id: 'volcanoesLayer'
                 })
             ]
